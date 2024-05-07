@@ -1,5 +1,8 @@
 <script setup>
+import MainCard from '@/components/MainCard.vue'
+import { ref } from 'vue'
 
+let board = ref({ thumbnail: 'https://velog.velcdn.com/images/vaping_ape/post/24b6609d-7dc2-405d-a89a-f2133fc4ee16/image.jpg', title: 'title'})
 </script>
 
 <template>
@@ -19,11 +22,37 @@
     </div>
 
     <hr class="m-5"/>
-    <h3 class="ms-5 ps-5">Latest Review</h3>
-
+    <h3 class="ms-5 ps-5 mb-3">Latest Review</h3>
+    <div class="d-flex">
+      <div class="ms-5 w-100">
+       <MainCard :board='board'/>
+      </div>
+      <div class="ms-5 w-100">
+       <MainCard :board='board'/>
+      </div>
+      <div class="ms-5 w-100">
+       <MainCard :board='board'/>
+      </div>
+      <div class="ms-5 w-100">
+       <MainCard :board='board'/>
+      </div>
+    </div>
     <hr class="m-5"/>
-    <h3 class="ms-5 ps-5">Best Review</h3>
-
+    <h3 class="ms-5 ps-5 mb-3">Best Review</h3>
+    <div class="d-flex">
+      <div class="ms-5 w-100">
+        <MainCard :board='board'/>
+      </div>
+      <div class="ms-5 w-100">
+        <MainCard :board='board'/>
+      </div>
+      <div class="ms-5 w-100">
+        <MainCard :board='board'/>
+      </div>
+      <div class="ms-5 w-100">
+        <MainCard :board='board'/>
+      </div>
+    </div>
     <hr class="m-5"/>
   </div>
 
