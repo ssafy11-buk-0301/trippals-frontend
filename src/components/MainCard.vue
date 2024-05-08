@@ -4,7 +4,7 @@
 </script>
 
 <template>
-  <div class="m-2 rounded-3" id="card">
+  <div class="m-2 rounded-3 shadow" id="card">
     <div id="thumbnail" class="rounded-3" :style="{ backgroundImage: `url(${board.thumbnail})` }"></div>
     <div id="title">{{ board.title }}</div>
   </div>
@@ -23,6 +23,6 @@
   }
 
   #card {
-    width: 200px;
+    width: 250px;
   }
 </style>

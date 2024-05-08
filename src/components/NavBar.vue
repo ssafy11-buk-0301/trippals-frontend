@@ -1,19 +1,27 @@
 <script setup>
+import { useUserStore } from '@/stores/login.js'
+let userStore = useUserStore()
 
+const logout = () => {
+  // logout api 호출
+  userStore.username = null;
+  location.reload()
+}
 </script>
 
 <template>
   <nav id="navbar" class="navbar border-bottom">
     <div class="container d-flex justify-content-start">
-      <a class="navbar-brand me-auto" href="#">
+      <RouterLink class="navbar-brand me-auto" to="/">
         <img src="../assets/logo.png" id="logo">
         <span class="font-bold">TripPals</span>
-      </a>
+      </RouterLink>
 
-      <button class="icon me-2"><i class="bi bi-journal-richtext"></i></button>
-      <button class="icon me-2"><i class="bi bi-globe-asia-australia"></i></button>
-      <button class="icon me-2"><i class="bi bi-person-circle"></i></button>
-      <button class="icon me-2"><i class="bi bi-box-arrow-right"></i></button>
+      <button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-journal-richtext"></i></button>
+      <button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-globe-asia-australia"></i></button>
+      <button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-person-circle"></i></button>
+      <button v-if="userStore.isLoggedIn" class="icon me-2" @click="logout"><i class="bi bi-box-arrow-right"></i></button>
+      <RouterLink v-if="!userStore.isLoggedIn" to="/login"><button class="icon me-2"><i class="bi bi-box-arrow-in-right mb-3"></i></button></RouterLink>
     </div>
   </nav>
 </template>

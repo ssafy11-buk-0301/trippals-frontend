@@ -1,5 +1,19 @@
 <script setup>
+  import { useUserStore } from '@/stores/login.js'
+  import MainPage from '@/views/MainPage.vue'
+  import router from '@/router/index.js'
 
+
+  const login = () => {
+    let userStore = useUserStore();
+    userStore.username = "ssafy";
+    router.push({
+      path: '/',
+      name: "home",
+      component: MainPage,
+      params: {}
+    });
+  }
 </script>
 
 <template>
@@ -17,7 +31,8 @@
     </label>
 
     <div class="d-flex mt-3 flex-row w-100 justify-content-between">
-      <RouterLink to="signUp" id="signUpButton">회원이 아니신가요?</RouterLink><button type="button" class="btn btn-warning rounded-5 fw-bolder">Log in</button>
+      <RouterLink to="/signUp" id="signUpButton">회원이 아니신가요?</RouterLink>
+      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="login">Log in</button>
     </div>
   </div>
 </template>
@@ -60,9 +75,5 @@
   #signUpButton {
     color: #9C9C4A;
     font-size: 12px;
-  }
-
-  #loginButton {
-
   }
 </style>

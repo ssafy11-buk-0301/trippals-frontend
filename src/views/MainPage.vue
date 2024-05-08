@@ -19,8 +19,8 @@ let latestBoard = ref([
 </script>
 
 <template>
-  <div class="container mt-3">
-    <div id="header" class="position-relative py-6 m-auto mt-3 rounded-5 shadow">
+  <div class="container">
+    <div id="header" class="position-relative py-6 m-auto mt-5 rounded-5 shadow-lg">
       <div id="gradient" class="w-100 h-100 rounded-5 text-center">
       </div>
       <div class="position-absolute top-50 start-50 translate-middle">
