@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import router from '@/router/index.js'
 
 let props = defineProps(['route'])
 let route = props.route
@@ -7,6 +8,10 @@ let date = computed(() => {
   let dt = route.startDate;
   return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
 })
+
+let moveDetailPage = (route) => {
+  router.push("/routes/" + route.routeId)
+}
 </script>
 
 <template>
@@ -22,7 +27,7 @@ let date = computed(() => {
     <div class="dropdown-center ms-auto me-5">
       <h2 class="bi bi-three-dots" data-bs-toggle="dropdown" aria-expanded="false"></h2>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" @click="moveDetailPage(route)">Action</a></li>
         <li><a class="dropdown-item" href="#">Another action</a></li>
         <li><a class="dropdown-item" href="#">Something else here</a></li>
         <li><hr class="dropdown-divider"></li>
