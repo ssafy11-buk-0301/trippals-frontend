@@ -17,7 +17,7 @@ const logout = () => {
         <span class="font-bold">TripPals</span>
       </RouterLink>
 
-      <button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-journal-richtext"></i></button>
+      <RouterLink to="/boards"><button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-journal-richtext"></i></button></RouterLink>
       <RouterLink to="/routes"><button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-globe-asia-australia"></i></button></RouterLink>
       <button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-person-circle"></i></button>
       <button v-if="userStore.isLoggedIn" class="icon me-2" @click="logout"><i class="bi bi-box-arrow-right"></i></button>

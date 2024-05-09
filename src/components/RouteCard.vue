@@ -2,8 +2,7 @@
 import { computed } from 'vue'
 import router from '@/router/index.js'
 
-let props = defineProps(['route'])
-let route = props.route
+let { route } = defineProps({route: Object})
 let date = computed(() => {
   let dt = route.startDate;
   return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();

@@ -5,6 +5,7 @@ import SignUpPage from '@/views/SignUpPage.vue'
 import { useUserStore } from '@/stores/login.js'
 import RouteListPage from '@/views/RouteListPage.vue'
 import RouteDetailPage from '@/views/RouteDetailPage.vue'
+import BoardListPage from '@/views/BoardListPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/routes/:routeId',
       name: 'routeDetail',
       component: RouteDetailPage
+    },
+    {
+      path: '/boards',
+      name: 'boardList',
+      component: BoardListPage
     },
   ]
 })
