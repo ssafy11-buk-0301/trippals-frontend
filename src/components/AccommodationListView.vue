@@ -2,18 +2,16 @@
 import AccommodationCard from '@/components/AccommodationCard.vue'
 
 let { accommodationList } = defineProps({ accommodationList: Object })
+let emits = defineEmits(["moveMarker"])
+
+const moveMarker = (obj) => {
+  emits("moveMarker", obj.latitude, obj.longitude)
+}
+
 </script>
 
 <template>
-  <div class="mb-3 d-flex flex-row align-items-center row listHeader border-bottom border-top">
-    <div class="col-1 h-100" id="thumbnail"></div>
-    <div class="fs-6 col-6 text-center border-end">Title</div>
-    <div class="fs-6 col-2 text-center border-end">Writer</div>
-    <div class="fs-6 col-1 text-center border-end">Read</div>
-    <div class="fs-6 col-2 text-center">Register</div>
-  </div>
-
-  <AccommodationCard v-for="(accommodation, index) in accommodationList" :key="index" :accommodation="accommodation" />
+  <AccommodationCard v-for="(accommodation, index) in accommodationList" :key="index" :accommodation="accommodation" @click="moveMarker(accommodation)"/>
 
   <nav class="ms-auto w-100 my-5">
     <ul class="pagination">
@@ -35,16 +33,6 @@ let { accommodationList } = defineProps({ accommodationList: Object })
 </template>
 
 <style scoped>
-
-#thumbnail {
-  width: 50px;
-}
-
-.listHeader {
-  height: 50px;
-  border: none;
-  background-color: #FCFCF7;
-}
 
 .page-link {
   background-color: #F5F5E8;

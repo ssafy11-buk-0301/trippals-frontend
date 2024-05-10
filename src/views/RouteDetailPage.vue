@@ -20,6 +20,12 @@ let activatedNav = ref(1);
 const setNav = (num) => {
   activatedNav.value = num;
 }
+
+const moveMarker = (lat, lng) => {
+  coordinate.value.lat = lat;
+  coordinate.value.lng = lng;
+  window.scrollTo({top:0, left:0, behavior:'auto'});
+}
 </script>
 
 <template>
@@ -54,9 +60,9 @@ const setNav = (num) => {
       </li>
     </ul>
 
-    <AttractionListView v-if="activatedNav === 1" :attractionList="attractionList" />
-    <FestivalListView v-else-if="activatedNav === 2" :festivalList="festivalList" />
-    <AccommodationListView v-else-if="activatedNav === 3" :accommodationList="accommodationList" />
+    <AttractionListView v-if="activatedNav === 1" :attractionList="attractionList" @moveMarker="moveMarker" />
+    <FestivalListView v-else-if="activatedNav === 2" :festivalList="festivalList" @moveMarker="moveMarker" />
+    <AccommodationListView v-else-if="activatedNav === 3" :accommodationList="accommodationList" @moveMarker="moveMarker" />
   </div>
 </template>
 
