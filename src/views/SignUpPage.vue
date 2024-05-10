@@ -67,12 +67,4 @@ input::placeholder {
   width: 100%;
 }
 
-#signUpButton {
-  color: #9C9C4A;
-  font-size: 12px;
-}
-
-#loginButton {
-
-}
 </style>
