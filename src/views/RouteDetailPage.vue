@@ -1,11 +1,25 @@
 <script setup>
 import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
+import { data } from '@/stores/data.js'
 import { ref } from 'vue'
+import AttractionListView from '@/components/AttractionListView.vue'
+import FestivalListView from '@/components/FestivalListView.vue'
+import AccommodationListView from '@/components/AccommodationListView.vue'
+
+let attractionList = ref(data.attractionList)
+let festivalList = ref(data.festivalList)
+let accommodationList = ref(data.accommodationList)
+
 const coordinate = ref({
   lat: 37.566826,
   lng: 126.9786567
 });
 
+let activatedNav = ref(1);
+
+const setNav = (num) => {
+  activatedNav.value = num;
+}
 </script>
 
 <template>
@@ -24,9 +38,25 @@ const coordinate = ref({
       <button class="btn btn-warning rounded-5 fw-bolder col-2" onclick="searchAttraction()">검색</button>
     </div>
 
-    <KakaoMap :lat="coordinate.lat" :lng="coordinate.lng" :draggable="true" class="w-100 rounded-5 border">
+    <KakaoMap :lat="coordinate.lat" :lng="coordinate.lng" :draggable="true" class="w-100 rounded-5 border mb-3">
       <KakaoMapMarker :lat="coordinate.lat" :lng="coordinate.lng"></KakaoMapMarker>
     </KakaoMap>
+
+    <ul class="nav nav-tabs justify-content-center" id="boardNav">
+      <li class="nav-item">
+        <button @click="setNav(1)" class="nav-link" :class="{ active: activatedNav === 1 }">여행지 목록</button>
+      </li>
+      <li class="nav-item">
+        <button @click="setNav(2)" class="nav-link" :class="{ active: activatedNav === 2 }">주변 축제 정보</button>
+      </li>
+      <li class="nav-item">
+        <button @click="setNav(3)" class="nav-link" :class="{ active: activatedNav === 3 }">주변 숙소 정보</button>
+      </li>
+    </ul>
+
+    <AttractionListView v-if="activatedNav === 1" :attractionList="attractionList" />
+    <FestivalListView v-else-if="activatedNav === 2" :festivalList="festivalList" />
+    <AccommodationListView v-else-if="activatedNav === 3" :accommodationList="accommodationList" />
   </div>
 </template>
 
@@ -53,5 +83,15 @@ input, select {
 
 input::placeholder {
   color: #9C9C4A;
+}
+
+.nav-tabs .nav-item .nav-link {
+  color: #9C9C4A;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+  background-color: #F5F5E8;
+  border-bottom-color: #ffc107;
+  border-bottom-width: 5px;
 }
 </style>
