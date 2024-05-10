@@ -14,6 +14,7 @@ let { attractionList } = defineProps({ attractionList: Object })
   </div>
 
   <AttractionCard v-for="(attraction, index) in attractionList" :key="index" :attraction="attraction" />
+
 </template>
 
 <style scoped>

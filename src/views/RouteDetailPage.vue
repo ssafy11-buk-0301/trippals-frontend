@@ -3,6 +3,8 @@ import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
 import { data } from '@/stores/data.js'
 import { ref } from 'vue'
 import AttractionListView from '@/components/AttractionListView.vue'
+import FestivalListView from '@/components/FestivalListView.vue'
+import AccommodationListView from '@/components/AccommodationListView.vue'
 
 let attractionList = ref(data.attractionList)
 let festivalList = ref(data.festivalList)
@@ -53,8 +55,8 @@ const setNav = (num) => {
     </ul>
 
     <AttractionListView v-if="activatedNav === 1" :attractionList="attractionList" />
-    <FestivalListView v-if="activatedNav === 2" :festivalList="festivalList" />
-    <AccommodationListView v-if="activatedNav === 3" :accommodationList="accommodationList" />
+    <FestivalListView v-else-if="activatedNav === 2" :festivalList="festivalList" />
+    <AccommodationListView v-else-if="activatedNav === 3" :accommodationList="accommodationList" />
   </div>
 </template>
 

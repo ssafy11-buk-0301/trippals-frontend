@@ -1,15 +1,15 @@
 <script setup>
-const { attraction } = defineProps({ attraction: Object})
+const { festival } = defineProps({ festival: Object})
 </script>
 
 <template>
   <div class="card my-5 d-flex flex-row align-items-center row">
-    <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${attraction.image})` }"></div>
+    <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${festival.image})` }"></div>
     <div class="h-100 ms-5 col-2 overflow-y-auto">
-      <p class="fs-4 fw-bold">{{ attraction.title  }}</p>
+      <p class="fs-4 fw-bold">{{ festival.title  }}</p>
     </div>
     <div class="h-100 align-items-center ms-5 w-50 overflow-y-auto px-2 col-2">
-      <p>{{ attraction.overview }}</p>
+      <p>{{ festival.overview }}</p>
     </div>
     <div class="dropdown-center ms-auto me-5 col-1">
       <h2 class="bi bi-three-dots" data-bs-toggle="dropdown" aria-expanded="false"></h2>
