@@ -2,18 +2,16 @@
 import FestivalCard from '@/components/FestivalCard.vue'
 
 let { festivalList } = defineProps({ festivalList: Object })
+
+let emits = defineEmits(["moveMarker"])
+
+const moveMarker = (obj) => {
+  emits("moveMarker", obj.latitude, obj.longitude)
+}
 </script>
 
 <template>
-  <div class="mb-3 d-flex flex-row align-items-center row listHeader border-bottom border-top">
-    <div class="col-1 h-100" id="thumbnail"></div>
-    <div class="fs-6 col-6 text-center border-end">Title</div>
-    <div class="fs-6 col-2 text-center border-end">Writer</div>
-    <div class="fs-6 col-1 text-center border-end">Read</div>
-    <div class="fs-6 col-2 text-center">Register</div>
-  </div>
-
-  <FestivalCard v-for="(festival, index) in festivalList" :key="index" :festival="festival" />
+  <FestivalCard v-for="(festival, index) in festivalList" :key="index" :festival="festival" @click="moveMarker(festival)"/>
 
   <nav class="ms-auto w-100 my-5">
     <ul class="pagination">
@@ -35,16 +33,6 @@ let { festivalList } = defineProps({ festivalList: Object })
 </template>
 
 <style scoped>
-
-#thumbnail {
-  width: 50px;
-}
-
-.listHeader {
-  height: 50px;
-  border: none;
-  background-color: #FCFCF7;
-}
 
 .page-link {
   background-color: #F5F5E8;
