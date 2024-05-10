@@ -6,6 +6,7 @@ import { useUserStore } from '@/stores/login.js'
 import RouteListPage from '@/views/RouteListPage.vue'
 import RouteDetailPage from '@/views/RouteDetailPage.vue'
 import BoardListPage from '@/views/BoardListPage.vue'
+import UserInfoPage from '@/views/UserInfoPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
       path: '/boards',
       name: 'boardList',
       component: BoardListPage
+    },
+    {
+      path: '/users',
+      name: 'userInfo',
+      component: UserInfoPage
     },
   ]
 })

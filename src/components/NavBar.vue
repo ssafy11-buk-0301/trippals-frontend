@@ -19,7 +19,7 @@ const logout = () => {
 
       <RouterLink to="/boards"><button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-journal-richtext"></i></button></RouterLink>
       <RouterLink to="/routes"><button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-globe-asia-australia"></i></button></RouterLink>
-      <button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-person-circle"></i></button>
+      <RouterLink to="/users"><button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-person-circle"></i></button></RouterLink>
       <button v-if="userStore.isLoggedIn" class="icon me-2" @click="logout"><i class="bi bi-box-arrow-right"></i></button>
       <RouterLink v-if="!userStore.isLoggedIn" to="/login"><button class="icon me-2"><i class="bi bi-box-arrow-in-right mb-3"></i></button></RouterLink>
     </div>
