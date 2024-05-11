@@ -42,10 +42,26 @@ const router = createRouter({
       component: BoardListPage
     },
     {
+      path: '/boards/:boardId',
+      name: 'boardDetail',
+      component: BoardDetailPage
+    },
+    {
+      path: '/boards/insert',
+      name: 'boardInsert',
+      component: BoardInsertPage
+    },
+    {
+      path: '/boards/update/:boardId',
+      name: 'boardUpdate',
+      component: BoardUpdatePage
+    },
+    {
       path: '/users',
       name: 'userInfo',
       component: UserInfoPage
     },
+
   ]
 })
 
