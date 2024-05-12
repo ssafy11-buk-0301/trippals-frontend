@@ -1,12 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 
-import { useRouteStore } from '@/stores/route.js'
 import RouteListView from '@/components/route/RouteListView.vue'
 import RouteFormDialog from '@/components/route/RouteFormDialog.vue'
-
-let routeStore = useRouteStore()
-let routeList = routeStore.routeList;
 
 let dialogProps = ref({
   title: "CreateRoute",
@@ -31,7 +27,7 @@ let cancelCreateRoute = () => {
   <div class="container w-100">
     <h1 class="display-4 fw-bold mb-3 mt-3">My Trip</h1>
 
-    <RouteListView :routeList="routeList" />
+    <RouteListView />
 
     <div class="w-100 d-flex justify-content-end">
       <button class="btn btn-warning rounded-5 fw-bolder me-5 my-3" @click="visible = true">Create Route</button>

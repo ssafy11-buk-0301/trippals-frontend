@@ -1,19 +1,18 @@
 <script setup>
 import { computed, ref } from 'vue'
 import router from '@/router/index.js'
-import RouteFormDialog from '@/components/RouteFormDialog.vue'
+import RouteFormDialog from '@/components/route/RouteFormDialog.vue'
 
 let { route } = defineProps({ route: Object })
-let routeData = ref(route)
 let date = computed(() => {
-  let dt = routeData.value.startDate;
+  let dt = route.startDate;
   return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
 })
 
-console.log(routeData)
+console.log(route)
 
 let moveDetailPage = () => {
-  router.push("/routes/" + route.value.routeId)
+  router.push("/routes/" + route.routeId)
 }
 
 let dialogProps = ref({
@@ -35,7 +34,7 @@ let cancelUpdateRoute = () => {
 <template>
   <div class="card my-5 d-flex flex-row align-items-center">
     <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${route.thumbnail})` }" @click="moveDetailPage"></div>
-    <div class="h-100 ms-5" @click="moveDetailPage">
+    <div class="h-100 ms-5 col-2 overflow-y-auto" @click="moveDetailPage">
       <p class="fs-4 fw-bold">{{ route.title  }}</p>
       <p class="date">{{ date }} ~</p>
     </div>
@@ -70,16 +69,28 @@ let cancelUpdateRoute = () => {
     background-color: #FCFCF7;
   }
 
-  .overview::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 5px;
   }
-  .overview::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background-color: white;
   }
-  .overview::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background-color: #9C9C4A;
   }
-  .overview::-webkit-scrollbar-button {
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: white;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #9C9C4A;
+  }
+  ::-webkit-scrollbar-button {
     display: none;
   }
 </style>
