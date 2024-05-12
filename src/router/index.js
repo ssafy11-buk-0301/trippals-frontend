@@ -7,7 +7,9 @@ import RouteListPage from '@/views/RouteListPage.vue'
 import RouteDetailPage from '@/views/RouteDetailPage.vue'
 import BoardListPage from '@/views/BoardListPage.vue'
 import UserInfoPage from '@/views/UserInfoPage.vue'
-
+import BoardDetailPage from '@/views/BoardDetailPage.vue'
+import BoardInsertPage from '@/views/BoardInsertPage.vue'
+import BoardUpdatePage from '@/views/BoardUpdatePage.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

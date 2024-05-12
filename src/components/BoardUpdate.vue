@@ -20,7 +20,7 @@ const readonly = true
   <!-- <div><img src="/src/assets/img/place.png" alt="" /></div> -->
   <div>
     <!-- <Editor editorStyle="height: 320px" v-model="modelValue" formats="html" /> -->
-    <quill-editor v-model:content="modelValue" contentType="html" theme="snow"></quill-editor>
+    <quill-editor v-model:content="modelValue" contentType="html" theme="snow" style="height:320px;"></quill-editor>
     <!-- <QuillEditor content="testContent" theme="snow" /> -->
   </div>
 
