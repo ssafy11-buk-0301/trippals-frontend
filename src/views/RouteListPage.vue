@@ -1,11 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import Dialog from 'primevue/dialog';
-import InputText from 'primevue/inputtext'
-import FloatLabel from 'primevue/floatlabel'
-import Textarea from 'primevue/textarea'
 import RouteListView from '@/components/RouteListView.vue'
-import Calendar from 'primevue/calendar'
+import RouteFormDialog from '@/components/RouteFormDialog.vue'
 
 let sampleRoute = {
   thumbnail: 'https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg',
@@ -15,15 +11,19 @@ let sampleRoute = {
   startDate: new Date('2024-05-01')
 };
 
-let visible = ref(false)
-
 let routeList = ref([sampleRoute, sampleRoute, sampleRoute, sampleRoute, sampleRoute, sampleRoute, sampleRoute])
 
+let dialogProps = ref({
+  title: "CreateRoute",
+  content: "Insert route information.",
+})
 let route = ref({})
+let visible = ref(false)
 
 let createRoute = () => {
   visible.value = false;
   console.log(JSON.stringify(route.value))
+  route.value = {};
 }
 
 let cancelCreateRoute = () => {
@@ -41,30 +41,9 @@ let cancelCreateRoute = () => {
     <div class="w-100 d-flex justify-content-end">
       <button class="btn btn-warning rounded-5 fw-bolder me-5 my-3" @click="visible = true">Create Route</button>
 
-      <Dialog v-model:visible="visible" modal header="Create Route" :style="{ width: '75%' }">
-        <span class="p-text-secondary block mb-5 w-100">Insert new Route.</span>
-        <FloatLabel class="flex align-items-center gap-3 mt-4 w-100">
-          <label for="title" class="font-semibold w-100">Title</label>
-          <InputText id="title" class="flex-auto w-100" autocomplete="off" v-model="route.title" />
-        </FloatLabel>
-        <FloatLabel class="flex align-items-center gap-5 mt-4 w-100">
-          <label for="overview" class="font-semibold w-100">Overview</label>
-          <Textarea id="overview" row="8" column="30" class="flex-auto w-100 rounded-2" autocomplete="off" v-model="route.overview" variant="outlined"/>
-        </FloatLabel>
-        <FloatLabel class="flex align-items-center gap-3 mt-4 w-100">
-          <label for="thumbnail" class="font-semibold w-100">Thumbnail</label>
-          <InputText id="thumbnail" class="flex-auto w-100" autocomplete="off" v-model="route.thumbnail" />
-        </FloatLabel>
-        <FloatLabel class="flex align-items-center gap-3 mt-4 w-100">
-          <label for="startDate" class="font-semibold w-100">StartDate</label>
-          <Calendar id="startDate"  clv-model="route.startDate" dateFormat="dd/mm/yy" />
-        </FloatLabel>
-        <div class="d-flex justify-content-end w-100 mt-2">
-          <button class="btn btn-secondary rounded-5 fw-bolder me-5 my-3" @click="cancelCreateRoute">Cancel</button>
-          <button class="btn btn-warning rounded-5 fw-bolder me-1 my-3" @click="createRoute">Create Route</button>
-        </div>
+      <RouteFormDialog v-model:dialogProps="dialogProps" v-model:route="route" v-model:visible="visible"
+        @dialogOk="createRoute" @dialogCancel="cancelCreateRoute" />
 
-      </Dialog>
     </div>
   </div>
 </template>
