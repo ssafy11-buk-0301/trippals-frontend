@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import RouteListView from '@/components/RouteListView.vue'
+import RouteFormDialog from '@/components/RouteFormDialog.vue'
 
-let route = {
+let sampleRoute = {
   thumbnail: 'https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg',
   routeId: 1,
   title: 'Roadtrip',
@@ -10,7 +11,25 @@ let route = {
   startDate: new Date('2024-05-01')
 };
 
-let routeList = ref([route, route, route, route, route, route, route])
+let routeList = ref([sampleRoute, sampleRoute, sampleRoute, sampleRoute, sampleRoute, sampleRoute, sampleRoute])
+
+let dialogProps = ref({
+  title: "CreateRoute",
+  content: "Insert route information.",
+})
+let route = ref({})
+let visible = ref(false)
+
+let createRoute = () => {
+  visible.value = false;
+  console.log(JSON.stringify(route.value))
+  route.value = {};
+}
+
+let cancelCreateRoute = () => {
+  visible.value = false;
+  route.value = {};
+}
 </script>
 
 <template>
@@ -20,7 +39,11 @@ let routeList = ref([route, route, route, route, route, route, route])
     <RouteListView :routeList="routeList" />
 
     <div class="w-100 d-flex justify-content-end">
-      <button class="btn btn-warning rounded-5 fw-bolder me-5 my-3">Create Route</button>
+      <button class="btn btn-warning rounded-5 fw-bolder me-5 my-3" @click="visible = true">Create Route</button>
+
+      <RouteFormDialog v-model:dialogProps="dialogProps" v-model:route="route" v-model:visible="visible"
+        @dialogOk="createRoute" @dialogCancel="cancelCreateRoute" />
+
     </div>
   </div>
 </template>
