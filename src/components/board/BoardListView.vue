@@ -1,7 +1,7 @@
 <script setup>
-import BoardCard from '@/components/BoardCard.vue'
 import { useRouter } from 'vue-router'
 import { useBoardStore } from '@/stores/board'
+import BoardCard from '@/components/board/BoardCard.vue'
 const store = useBoardStore()
 const router = useRouter()
 const detailPage = (board) => {

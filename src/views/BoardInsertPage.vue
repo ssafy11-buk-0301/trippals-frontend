@@ -1,8 +1,8 @@
 <script setup>
 import { useUserStore } from '@/stores/login'
-import BoardInsert from '@/components/BoardInsert.vue'
 import { useRoute } from 'vue-router'
 import { onMounted } from 'vue'
+import BoardInsert from '@/components/board/BoardInsert.vue'
 const store = useUserStore()
 const route = useRoute()
 //로그인 정보 가져오기

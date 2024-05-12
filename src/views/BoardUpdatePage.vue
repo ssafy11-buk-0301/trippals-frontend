@@ -1,9 +1,9 @@
 <script setup>
 import { useUserStore } from '@/stores/login'
 import { useBoardStore } from '@/stores/board'
-import BoardUpdate from '@/components/BoardUpdate.vue'
 import { useRoute } from 'vue-router'
 import { onMounted } from 'vue'
+import BoardUpdate from '@/components/board/BoardUpdate.vue'
 const store = useUserStore()
 const boardStore = useBoardStore()
 const route = useRoute()

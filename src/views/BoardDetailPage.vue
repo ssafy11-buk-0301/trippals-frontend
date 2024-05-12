@@ -1,9 +1,9 @@
 <script setup>
 import { useBoardStore } from '@/stores/board'
-import BoardDetail from '@/components/BoardDetail.vue'
-import BoardButtons from '@/components/BoardButtons.vue'
 import { useRoute } from 'vue-router'
 import { onMounted } from 'vue'
+import BoardDetail from '@/components/board/BoardDetail.vue'
+import BoardButtons from '@/components/board/BoardButtons.vue'
 const store = useBoardStore()
 const route = useRoute()
 onMounted(() => {

@@ -2,9 +2,9 @@
 import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
 import { data } from '@/stores/data.js'
 import { ref } from 'vue'
-import AttractionListView from '@/components/AttractionListView.vue'
-import FestivalListView from '@/components/FestivalListView.vue'
-import AccommodationListView from '@/components/AccommodationListView.vue'
+import AttractionListView from '@/components/route/AttractionListView.vue'
+import FestivalListView from '@/components/route/FestivalListView.vue'
+import AccommodationListView from '@/components/route/AccommodationListView.vue'
 
 let attractionList = ref(data.attractionList)
 let festivalList = ref(data.festivalList)

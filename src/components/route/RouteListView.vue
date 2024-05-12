@@ -1,5 +1,5 @@
 <script setup>
-import RouteCard from '@/components/RouteCard.vue'
+import RouteCard from '@/components/route/RouteCard.vue'
 
 let { routeList } = defineProps({ routeList: Object });
 
