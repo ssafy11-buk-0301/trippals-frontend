@@ -37,3 +37,12 @@
 ![img_5.png](img_5.png)
 ### 주변 축제 목록
 ![img_6.png](img_6.png)
+
+## 게시판 목록 페이지
+![image](img/boardList.png)
+## 게시판 상세 페이지
+![image](img/boardDetail.png)
+## 게시판 수정 페이지
+![image](img/boardUpdate.png)
+## 게시판 글쓰기 페이지
+![image](img/boardInsert.png)
