@@ -68,15 +68,15 @@ const router = createRouter({
 })
 
 
-// router.beforeEach((to, from, next) => {
-//   const userStore = useUserStore();
-//   if (to.fullPath === '/signUp' || to.fullPath === '/login' || to.fullPath === '/') {
-//     next();
-//   } else if (!userStore.isLoggedIn) {
-//     next("/login");
-//   } else {
-//     next();
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  if (to.fullPath === '/signUp' || to.fullPath === '/login' || to.fullPath === '/') {
+    next();
+  } else if (!userStore.isLoggedIn) {
+    next("/login");
+  } else {
+    next();
+  }
+})
 
 export default router
