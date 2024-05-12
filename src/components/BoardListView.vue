@@ -1,14 +1,7 @@
 <script setup>
 import BoardCard from '@/components/BoardCard.vue'
-import { useRouter } from 'vue-router'
-import { useBoardStore } from '@/stores/board'
-const store = useBoardStore()
-const router = useRouter()
-const detailPage = (board) => {
-  router.push({
-    path: `/boards/${board.boardId}`
-  })
-}
+
+let { boardList } = defineProps({ boardList: Object })
 </script>
 
 <template>
@@ -20,15 +13,11 @@ const detailPage = (board) => {
     <div class="fs-6 col-2 text-center">Register</div>
   </div>
 
-  <BoardCard
-    v-for="(board, index) in store.boardList"
-    :key="index"
-    :board="board"
-    @click="detailPage(board)"
-  />
+  <BoardCard v-for="(board, index) in boardList" :key="index" :board="board" />
 </template>
 
 <style scoped>
+
 #thumbnail {
   width: 50px;
 }
@@ -36,6 +25,6 @@ const detailPage = (board) => {
 .listHeader {
   height: 50px;
   border: none;
-  background-color: #fcfcf7;
+  background-color: #FCFCF7;
 }
 </style>
