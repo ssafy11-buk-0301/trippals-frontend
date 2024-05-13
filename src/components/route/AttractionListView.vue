@@ -10,7 +10,7 @@ const moveMarker = (obj) => {
 </script>
 
 <template>
-  <AttractionCard v-for="(attraction, index) in attractionList" :key="index" :attraction="attraction" @click="moveMarker(attraction)" />
+  <AttractionCard v-for="(attraction, index) in attractionList" :key="index" :attraction="attraction" @moveMarker="moveMarker" />
 
 </template>
 
