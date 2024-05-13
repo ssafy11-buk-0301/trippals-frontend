@@ -5,6 +5,7 @@ import AttractionListView from '@/components/route/AttractionListView.vue'
 import FestivalListView from '@/components/route/FestivalListView.vue'
 import AccommodationListView from '@/components/route/AccommodationListView.vue'
 import { useAttractionStore } from '@/stores/attraction.js'
+import SearchedAttractionListView from '@/components/route/SearchedAttractionListView.vue'
 
 let attractionStore = useAttractionStore()
 
@@ -17,7 +18,7 @@ const coordinate = ref({
   lng: 126.9786567
 });
 
-let activatedNav = ref(1);
+let activatedNav = ref(0);
 
 const setNav = (num) => {
   activatedNav.value = num;
@@ -52,6 +53,9 @@ const moveMarker = (lat, lng) => {
 
     <ul class="nav nav-tabs justify-content-center" id="boardNav">
       <li class="nav-item">
+        <button @click="setNav(0)" class="nav-link" :class="{ active: activatedNav === 0 }">검색 결과</button>
+      </li>
+      <li class="nav-item">
         <button @click="setNav(1)" class="nav-link" :class="{ active: activatedNav === 1 }">여행지 목록</button>
       </li>
       <li class="nav-item">
@@ -62,6 +66,7 @@ const moveMarker = (lat, lng) => {
       </li>
     </ul>
 
+    <SearchedAttractionListView v-if="activatedNav === 0" :attractionList="attractionList" @moveMarker="moveMarker" />
     <AttractionListView v-if="activatedNav === 1" :attractionList="attractionList" @moveMarker="moveMarker" />
     <FestivalListView v-else-if="activatedNav === 2" :festivalList="festivalList" @moveMarker="moveMarker" />
     <AccommodationListView v-else-if="activatedNav === 3" :accommodationList="accommodationList" @moveMarker="moveMarker" />
