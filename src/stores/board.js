@@ -3,7 +3,7 @@ import axios from '@/axios/axios-config'
 import { ref } from 'vue'
 
 export const useBoardStore = defineStore('boardStore', () => {
-  let board = {
+  let board = ref({
     thumbnail:
       'https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg',
     boardId: 1,
@@ -13,7 +13,7 @@ export const useBoardStore = defineStore('boardStore', () => {
     readCount: 3,
     registerDate: new Date('2024-05-01'),
     writer: 'fosong'
-  }
+  })
   const board2 = {
     thumbnail:
       'https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg',
@@ -25,7 +25,7 @@ export const useBoardStore = defineStore('boardStore', () => {
     registerDate: new Date('2024-05-01'),
     writer: 'fosong'
   }
-  const boardList = ref([board, board2, board, board, board])
+  const boardList = ref([board2, board2, board2, board2, board2])
 
   const listBoard = async () => {
     // 목록

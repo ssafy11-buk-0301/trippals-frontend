@@ -7,8 +7,7 @@ import Editor from 'primevue/editor'
 
 const user = useUserStore()
 const boardStore = useBoardStore()
-const modelValue = boardStore.board.content
-const readonly = true
+const board = boardStore.board
 //date 때문에 Gson 사용 고려
 </script>
 
@@ -19,12 +18,12 @@ const readonly = true
   </div>
   <!-- <div><img src="/src/assets/img/place.png" alt="" /></div> -->
   <div>
-    <Editor editorStyle="height: 320px" v-model="modelValue" theme="snow" />
-    <!-- <quill-editor v-model:content="modelValue" contentType="html" theme="snow"></quill-editor> -->
+    <!-- <Editor editorStyle="height: 320px" v-model:content="boardContent" theme="snow" /> -->
+    <quill-editor v-model:content="board.content" contentType="text" theme="snow"></quill-editor>
     <!-- <QuillEditor v-model="modelValue" theme="snow" /> -->
   </div>
 
-  <!-- {{ boardStore.board.content }} -->
+  <!-- {{ board.content }} -->
 
   <div class="d-flex w-100 mt-1">
     <button class="btn btn-warning fw-bold ms-auto me-1">임시저장</button>
