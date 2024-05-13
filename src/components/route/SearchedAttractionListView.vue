@@ -1,16 +1,20 @@
 <script setup>
-import AttractionCard from '@/components/route/AttractionCard.vue'
+import SearchedAttractionCard from '@/components/route/SearchedAttractionCard.vue'
 
 let { attractionList } = defineProps({ attractionList: Object })
-let emits = defineEmits(["moveMarker"])
+let emits = defineEmits(["moveMarker", "showReview"])
 
 const moveMarker = (obj) => {
   emits("moveMarker", obj.latitude, obj.longitude)
 }
+
+const showReview = (obj) => {
+  emits("showReview", obj)
+}
 </script>
 
 <template>
-  <AttractionCard v-for="(attraction, index) in attractionList" :key="index" :attraction="attraction" @moveMarker="moveMarker" />
+  <SearchedAttractionCard v-for="(attraction, index) in attractionList" :key="index" :attraction="attraction" @moveMarker="moveMarker" @showReview="showReview" />
   <nav class="ms-auto w-100 my-5">
     <ul class="pagination">
       <li class="page-item ms-auto">
