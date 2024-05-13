@@ -1,14 +1,16 @@
 <script setup>
 import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
-import { data } from '@/stores/data.js'
 import { ref } from 'vue'
 import AttractionListView from '@/components/route/AttractionListView.vue'
 import FestivalListView from '@/components/route/FestivalListView.vue'
 import AccommodationListView from '@/components/route/AccommodationListView.vue'
+import { useAttractionStore } from '@/stores/attraction.js'
 
-let attractionList = ref(data.attractionList)
-let festivalList = ref(data.festivalList)
-let accommodationList = ref(data.accommodationList)
+let attractionStore = useAttractionStore()
+
+let attractionList = attractionStore.attractionList
+let festivalList = attractionStore.festivalList
+let accommodationList = attractionStore.accommodationList
 
 const coordinate = ref({
   lat: 37.566826,
