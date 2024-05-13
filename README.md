@@ -35,7 +35,7 @@
 ![img/img_4.png](img/img_4.png)
 ### 주변 축제 목록
 ![img/img_5.png](img/img_5.png)
-### 주변 축제 목록
+### 주변 숙소 목록
 ![img/img_6.png](img/img_6.png)
 
 ## 게시판 목록 페이지

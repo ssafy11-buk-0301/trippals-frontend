@@ -1,34 +1,23 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import router from '@/router/index.js'
-import RouteFormDialog from '@/components/route/RouteFormDialog.vue'
 
-let { route } = defineProps({ route: Object })
+let { route } = defineProps({route: Object})
+console.log(route)
+
+let emits = defineEmits(['getEditForm'])
 let date = computed(() => {
   let dt = route.startDate;
   return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
 })
-
-console.log(route)
+let getEditForm = () => {
+  emits('getEditForm', route)
+}
 
 let moveDetailPage = () => {
   router.push("/routes/" + route.routeId)
 }
 
-let dialogProps = ref({
-  title: "UpdateRoute",
-  content: "Update route information.",
-})
-let visible = ref(false)
-
-let updateRoute = () => {
-  visible.value = false;
-  console.log(JSON.stringify(route.value))
-}
-
-let cancelUpdateRoute = () => {
-  visible.value = false;
-}
 </script>
 
 <template>
@@ -44,13 +33,11 @@ let cancelUpdateRoute = () => {
     <div class="dropdown-center ms-auto me-5">
       <h2 class="bi bi-three-dots" data-bs-toggle="dropdown" aria-expanded="false"></h2>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" @click="visible = true">Edit</a></li>
+        <li><a class="dropdown-item" @click="getEditForm">Edit</a></li>
         <li><a class="dropdown-item">Delete</a></li>
       </ul>
     </div>
   </div>
-  <RouteFormDialog v-model:dialogProps="dialogProps" v-model:route="routeData" v-model:visible="visible"
-                   @dialogOk="updateRoute" @dialogCancel="cancelUpdateRoute" />
 </template>
 
 <style scoped>

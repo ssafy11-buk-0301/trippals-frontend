@@ -7,8 +7,8 @@ const moveMarker = () => {
   emits("moveMarker", attraction)
 }
 
-const showReview = (obj) => {
-  emits("showReview", obj)
+const showReview = () => {
+  emits("showReview", attraction)
 }
 </script>
 
@@ -24,9 +24,8 @@ const showReview = (obj) => {
     <div class="dropdown-center ms-auto me-5 col-1">
       <h2 class="bi bi-three-dots" data-bs-toggle="dropdown" aria-expanded="false"></h2>
       <ul class="dropdown-menu">
+        <li><a class="dropdown-item">Add</a></li>
         <li><a class="dropdown-item" @click="showReview">Review</a></li>
-        <li><a class="dropdown-item">Edit</a></li>
-        <li><a class="dropdown-item">Delete</a></li>
       </ul>
     </div>
   </div>
@@ -36,6 +35,10 @@ const showReview = (obj) => {
 #thumbnail {
   width: 100px;
   background-size: cover;
+}
+
+.date {
+  color: #9C9C4A;
 }
 
 .card {

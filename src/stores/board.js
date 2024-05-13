@@ -91,6 +91,11 @@ export const useBoardStore = defineStore('boardStore', () => {
       console.log(error)
     }
   }
+
+  const findBoardByRouteId = (routeId) => {
+    return boardList.value
+  }
+
   const clear = () => {
     board.value = {}
   }
@@ -101,6 +106,7 @@ export const useBoardStore = defineStore('boardStore', () => {
     insertBoard,
     updateBoard,
     deleteBoard,
+    findBoardByRouteId,
     clear,
     board,
     boardList
