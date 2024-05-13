@@ -1,5 +1,5 @@
 <script setup>
-import AttractionCard from '@/components/AttractionCard.vue'
+import AttractionCard from '@/components/route/AttractionCard.vue'
 
 let { attractionList } = defineProps({ attractionList: Object })
 let emits = defineEmits(["moveMarker"])

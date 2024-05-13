@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import BoardCard from '@/components/BoardCard.vue'
-import BoardListView from '@/components/BoardListView.vue'
 import { useRouter } from 'vue-router'
+import BoardListView from '@/components/board/BoardListView.vue'
 const router = useRouter()
 const insertBoardPage = () => {
   router.push({

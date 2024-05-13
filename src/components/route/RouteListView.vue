@@ -1,7 +1,9 @@
 <script setup>
-import RouteCard from '@/components/RouteCard.vue'
+import RouteCard from '@/components/route/RouteCard.vue'
+import { useRouteStore } from '@/stores/route.js'
 
-let { routeList } = defineProps({ routeList: Object });
+let routeStore = useRouteStore()
+let routeList = routeStore.routeList
 
 </script>
 

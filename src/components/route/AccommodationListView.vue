@@ -1,17 +1,18 @@
 <script setup>
-import FestivalCard from '@/components/FestivalCard.vue'
 
-let { festivalList } = defineProps({ festivalList: Object })
+import AccommodationCard from '@/components/route/AccommodationCard.vue'
 
+let { accommodationList } = defineProps({ accommodationList: Object })
 let emits = defineEmits(["moveMarker"])
 
 const moveMarker = (obj) => {
   emits("moveMarker", obj.latitude, obj.longitude)
 }
+
 </script>
 
 <template>
-  <FestivalCard v-for="(festival, index) in festivalList" :key="index" :festival="festival" @click="moveMarker(festival)"/>
+  <AccommodationCard v-for="(accommodation, index) in accommodationList" :key="index" :accommodation="accommodation" @click="moveMarker(accommodation)"/>
 
   <nav class="ms-auto w-100 my-5">
     <ul class="pagination">
