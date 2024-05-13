@@ -23,7 +23,7 @@ const dialogCancel = () => {
 </script>
 
 <template>
-  <Dialog v-model:visible="visible" modal :header="dialogProps.title" :style="{ width: '75%' }">
+  <Dialog v-model:visible="visible" modal :header="dialogProps.title" :style="{ width: '50%' }">
     <span class="p-text-secondary block mb-5 w-100">{{ dialogProps.content }}</span>
     <FloatLabel class="flex align-items-center gap-3 mt-4 w-100">
       <label for="title" class="font-semibold w-100">Title</label>
