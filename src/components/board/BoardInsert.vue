@@ -1,9 +1,6 @@
 <script setup>
 import { useUserStore } from '@/stores/login'
 import { useBoardStore } from '@/stores/board'
-import { computed } from 'vue'
-
-import Editor from 'primevue/editor'
 
 const user = useUserStore()
 const boardStore = useBoardStore()

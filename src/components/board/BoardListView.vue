@@ -9,6 +9,7 @@ const detailPage = (board) => {
     path: `/boards/${board.boardId}`
   })
 }
+//mount list
 </script>
 
 <template>
