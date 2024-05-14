@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import axios from '@/axios/axios-config'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export const useBoardStore = defineStore('boardStore', () => {
+  const router=useRouter()
   let board = ref({
     thumbnail:
       'https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg',
@@ -45,7 +47,8 @@ export const useBoardStore = defineStore('boardStore', () => {
     axios
       .post('/boards', board.value)
       .then(function (response) {
-        listBoard()
+        router.push('/boards')
+        //listBoard()
       })
       .catch(function (error) {
         console.log(error)
