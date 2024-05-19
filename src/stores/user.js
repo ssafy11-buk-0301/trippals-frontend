@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import axios from 'axios'
 
 const baseUrl = "http://localhost:8080"
 
 export const useUserStore =
   defineStore('user', ()=>{
-    const user = ref({})
+    let user = ref({})
 
     const confirm = async (email) => {
       try {
@@ -28,9 +28,36 @@ export const useUserStore =
       return false;
     }
 
+    const login = async (loginForm) => {
+      try {
+        let response = await axios.post(baseUrl + "/login", loginForm);
+        user.value = response.data
+        return true;
+      } catch (e) {
+        console.log(`error: ${JSON.stringify(e.response.data)}`);
+      }
+      return false;
+    }
+
+    const logout = async () => {
+      try {
+        await axios.post(baseUrl + "/logout");
+        user.value = {};
+      } catch (e) {
+        console.log(`error: ${JSON.stringify(e.response.data)}`);
+      }
+    }
+
+    const isLogin = computed(() => {
+      return user.value.name !== undefined;
+    })
+
     return {
       user,
       confirm,
-      signUp
+      signUp,
+      login,
+      logout,
+      isLogin
     }
   })
