@@ -1,33 +1,115 @@
 <script setup>
+import { reactive, ref } from 'vue'
+import { useUserStore } from '@/stores/user.js'
+import router from '@/router/index.js'
 
+  let userStore = useUserStore();
+  let signUpForm = reactive({
+    name: 'jaedoo',
+    password: '1234qwer!!',
+    email: 'jaedoo@ssafy.com'
+  });
+  const invalid = reactive({
+    name: false,
+    email: false,
+    emailRule: false,
+    password: false,
+    passwordRule: false,
+    duplicated: false,
+  });
+  const passwordConfirm = ref("1234qwer!!")
+
+  const verification = {
+    name: () => {
+      if (!signUpForm.name || signUpForm.name === "") {
+        invalid.name = true;
+      } else {
+        invalid.name = false;
+      }
+    },
+
+    email: async () => {
+      invalid.email = false;
+      invalid.emailRule = false;
+      invalid.duplicated = false;
+      const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/
+      if (!signUpForm.email || signUpForm.email === "") {
+        invalid.email = true;
+      } else if (!regex.test(signUpForm.email)) {
+        invalid.emailRule = true;
+      } else if (! await userStore.confirm(signUpForm.email)) {
+        invalid.duplicated = true;
+      }
+    },
+
+    password: () => {
+      invalid.password = false;
+      invalid.passwordRule = false;
+      const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
+      if (!signUpForm.password || signUpForm.password === "") {
+        invalid.password = true;
+      } else if(!regex.test(signUpForm.password)) {
+        invalid.passwordRule = true;
+      }
+    },
+
+    passwordConfirm: () => {
+      if (invalid.password || signUpForm.password !== passwordConfirm.value) {
+        invalid.passwordConfirm = true;
+      } else {
+        invalid.passwordConfirm = false;
+      }
+    }
+  }
+
+  const verify = () => {
+    Object.values(verification).forEach((elem) => elem())
+  }
+
+  const signUp = async () => {
+    verify();
+    if (Object.values(verification).every(e => !e || e)) {
+      if (await userStore.signUp(signUpForm)) {
+        router.push('/login')
+      }
+    }
+    alert('입력이 잘못되었습니다.');
+  }
 </script>
 
 <template>
-  <div class="container d-flex flex-column justify-content-center align-items-center" id="loginPage">
-    <h2 class="fw-bold mb-4">Sign up</h2>
+  <div class="container d-flex flex-column justify-content-center align-items-center was-validated mt-5" id="loginPage">
+    <h2 class="fw-bold mb-1">Sign up</h2>
 
-    <label class="inputLabel">
+    <label class="inputLabel mt-3">
       <span class="ms-2 fw-light">Name</span>
-      <input class="mx-auto mt-1 mb-3" type="text" id="name" placeholder="Enter your name" />
+      <input class="mx-auto mt-1" type="text" id="name" placeholder="Enter your name" v-model="signUpForm.name" @blur="verification.name" />
+      <div v-show="invalid.name" class="is-invalid ms-3 mt-0 mb-1">이름을 입력하세요.</div>
     </label>
 
-    <label class="inputLabel">
+    <label class="inputLabel mt-3">
       <span class="ms-2 fw-light">Email</span>
-      <input class="mx-auto mt-1 mb-3" type="email" id="email" placeholder="Enter your email" />
+      <input class="mx-auto mt-1" type="email" id="email" placeholder="Enter your email"  v-model="signUpForm.email" @blur="verification.email" />
+      <div v-show="invalid.email" class="is-invalid">이메일을 입력하세요.</div>
+      <div v-show="invalid.duplicated" class="is-invalid">이미 존재하는 이메일입니다.</div>
+      <div v-show="invalid.emailRule" class="is-invalid">이메일 형식이 올바르지 않습니다.</div>
     </label>
 
-    <label class="inputLabel">
+    <label class="inputLabel mt-3">
       <span class="ms-2 fw-light">Password</span>
-      <input class="mx-auto mt-1 mb-3" type="password" id="password" placeholder="Enter your password" />
+      <input class="mx-auto mt-1" type="password" id="password" placeholder="Enter your password"  v-model="signUpForm.password" @blur="verification.password" />
+      <div v-show="invalid.password" class="is-invalid">비밀번호 입력하세요.</div>
+      <div v-show="invalid.passwordRule" class="is-invalid">비밀번호 형식이 올바르지 않습니다.(문자, 숫자, 특수문자 포함 8~15글자)</div>
     </label>
 
-    <label class="inputLabel">
+    <label class="inputLabel mt-3">
       <span class="ms-2 fw-light">Confirm Password</span>
-      <input class="mx-auto mt-1 mb-3" type="password" id="passwordAgain" placeholder="Enter your password again" />
+      <input class="mx-auto mt-1 mb-3" type="password" id="passwordAgain" placeholder="Enter your password again" v-model="passwordConfirm" @blur="verification.passwordConfirm"/>
+      <div v-show="invalid.passwordConfirm" class="is-invalid">비밀번호가 일치하지 않습니다.</div>
     </label>
 
     <div class="d-flex mt-3 flex-row w-100 justify-content-between">
-      <button type="button" class="btn btn-warning rounded-5 fw-bolder ms-auto">Sign up</button>
+      <button type="button" class="btn btn-warning rounded-5 fw-bolder ms-auto" @click="signUp">Sign up</button>
     </div>
   </div>
 </template>
@@ -65,6 +147,12 @@ input::placeholder {
 
 .inputLabel {
   width: 100%;
+}
+
+.is-invalid {
+  color: red;
+  margin-left:  5px;
+  font-size: 0.7rem;
 }
 
 </style>

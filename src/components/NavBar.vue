@@ -1,10 +1,11 @@
 <script setup>
-import { useUserStore } from '@/stores/login.js'
+import { useUserStore } from '@/stores/user.js'
 let userStore = useUserStore()
 
+console.log(userStore.isLogin);
+
 const logout = () => {
-  // logout api 호출
-  userStore.username = null;
+  userStore.logout()
   location.reload()
 }
 </script>
@@ -17,11 +18,11 @@ const logout = () => {
         <span class="font-bold">TripPals</span>
       </RouterLink>
 
-      <RouterLink to="/boards"><button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-journal-richtext"></i></button></RouterLink>
-      <RouterLink to="/routes"><button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-globe-asia-australia"></i></button></RouterLink>
-      <RouterLink to="/users"><button v-if="userStore.isLoggedIn" class="icon me-2"><i class="bi bi-person-circle"></i></button></RouterLink>
-      <button v-if="userStore.isLoggedIn" class="icon me-2" @click="logout"><i class="bi bi-box-arrow-right"></i></button>
-      <RouterLink v-if="!userStore.isLoggedIn" to="/login"><button class="icon me-2"><i class="bi bi-box-arrow-in-right mb-3"></i></button></RouterLink>
+      <RouterLink to="/boards"><button v-if="userStore.isLogin" class="icon me-2"><i class="bi bi-journal-richtext"></i></button></RouterLink>
+      <RouterLink to="/routes"><button v-if="userStore.isLogin" class="icon me-2"><i class="bi bi-globe-asia-australia"></i></button></RouterLink>
+      <RouterLink to="/users"><button v-if="userStore.isLogin" class="icon me-2"><i class="bi bi-person-circle"></i></button></RouterLink>
+      <button v-if="userStore.isLogin" class="icon me-2" @click="logout"><i class="bi bi-box-arrow-right"></i></button>
+      <RouterLink v-if="!userStore.isLogin" to="/login"><button class="icon me-2"><i class="bi bi-box-arrow-in-right mb-3"></i></button></RouterLink>
     </div>
   </nav>
 </template>

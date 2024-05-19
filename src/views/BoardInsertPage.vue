@@ -1,5 +1,5 @@
 <script setup>
-import { useUserStore } from '@/stores/login'
+import { useUserStore } from '@/stores/user.js'
 import { useRoute } from 'vue-router'
 import { onMounted } from 'vue'
 import BoardInsert from '@/components/board/BoardInsert.vue'
