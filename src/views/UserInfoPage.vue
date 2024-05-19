@@ -1,19 +1,70 @@
 <script setup>
-  import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
   let editInfo = ref(false);
   let editPassword = ref(false);
 
-  let passwordEditForm = ref({
+  let passwordEditForm = reactive({
     currentPassword: "",
     editPassword: "",
     editPasswordConfirm: "",
   });
 
-  let infoEditForm = ref({
+  let infoEditForm = reactive({
     name: "",
     profile: "",
-  })
+  });
+
+  const invalid = reactive({
+    name: false,
+    password: false,
+    passwordRule: false,
+    passwordConfirm: false,
+    profile: false
+  });
+
+
+  const verification = {
+
+      password: () => {
+        invalid.password = false;
+        invalid.passwordRule = false;
+        const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
+        if (!passwordEditForm.password || passwordEditForm.password === "") {
+          invalid.password = true;
+        } else if(!regex.test(passwordEditForm.password)) {
+          invalid.passwordRule = true;
+        }
+      },
+
+      passwordConfirm: () => {
+        if (invalid.password || passwordEditForm.password !== passwordConfirm.value) {
+          invalid.passwordConfirm = true;
+        } else {
+          invalid.passwordConfirm = false;
+        }
+      },
+  }
+
+  let infoVerification = {
+    name: () => {
+      if (!infoEditForm.name || infoEditForm.name === "") {
+        invalid.name = true;
+      } else {
+        invalid.name = false;
+      }
+    },
+
+    profile: () => {
+      if (!infoEditForm.profile || infoEditForm.profile === "") {
+        invalid.profile = true;
+      } else {
+        invalid.profile = false;
+      }
+    },
+  }
+
+
 
   let toggleEditInfo = () => {
     editInfo.value = !editInfo.value;
