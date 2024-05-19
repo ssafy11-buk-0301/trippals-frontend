@@ -1,5 +1,5 @@
 <script setup>
-import { useUserStore } from '@/stores/login.js'
+import { useUserStore } from '@/stores/user.js'
 let userStore = useUserStore()
 
 const logout = () => {
