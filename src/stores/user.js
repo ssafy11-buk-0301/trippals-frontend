@@ -13,13 +13,19 @@ export const useUserStore =
         await axios.get(baseUrl + "/signUp/confirm", { params: { email: email } });
         return true;
       } catch (e) {
-        console.log(`error: ${e.response.data}`);
+        console.log(`error: ${JSON.stringify(e.response.data)}`);
       }
       return false;
     }
 
     const signUp = async (signUpForm) => {
-      axios.post(baseUrl + "/signUp", signUpForm)
+      try {
+        await axios.post(baseUrl + "/signUp", signUpForm);
+        return true;
+      } catch (e) {
+        console.log(`error: ${JSON.stringify(e.response.data)}`);
+      }
+      return false;
     }
 
     return {
