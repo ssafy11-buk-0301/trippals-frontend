@@ -72,7 +72,7 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   if (to.fullPath === '/signUp' || to.fullPath === '/login' || to.fullPath === '/') {
     next();
-  } else if (!userStore.isLoggedIn) {
+  } else if (!userStore.isLogin) {
     next("/login");
   } else {
     next();

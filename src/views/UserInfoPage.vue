@@ -2,12 +2,12 @@
 import { reactive, ref } from 'vue'
 
   let editInfo = ref(false);
-  let editPassword = ref(false);
+  let newPassword = ref(false);
 
   let passwordEditForm = reactive({
     currentPassword: "",
-    editPassword: "",
-    editPasswordConfirm: "",
+    newPassword: "",
+    newPasswordConfirm: "",
   });
 
   let infoEditForm = reactive({
@@ -17,28 +17,38 @@ import { reactive, ref } from 'vue'
 
   const invalid = reactive({
     name: false,
-    password: false,
+    currentPassword: false,
+    newPassword: false,
     passwordRule: false,
     passwordConfirm: false,
     profile: false
   });
 
 
-  const verification = {
+  const passwordVerification = {
 
-      password: () => {
-        invalid.password = false;
+      currentPassword: () => {
+        if (!passwordEditForm.currentPassword || passwordEditForm.currentPassword === "") {
+          invalid.currentPassword = true;
+        } else {
+          invalid.currentPassword = false;
+        }
+      },
+
+      newPassword: () => {
+        invalid.newPassword = false;
         invalid.passwordRule = false;
+
         const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
-        if (!passwordEditForm.password || passwordEditForm.password === "") {
-          invalid.password = true;
-        } else if(!regex.test(passwordEditForm.password)) {
+        if (!passwordEditForm.newPassword || passwordEditForm.newPassword === "") {
+          invalid.newPassword = true;
+        } else if(!regex.test(passwordEditForm.newPassword)) {
           invalid.passwordRule = true;
         }
       },
 
       passwordConfirm: () => {
-        if (invalid.password || passwordEditForm.password !== passwordConfirm.value) {
+        if (invalid.newPassword || passwordEditForm.newPassword !== passwordEditForm.newPasswordConfirm) {
           invalid.passwordConfirm = true;
         } else {
           invalid.passwordConfirm = false;
@@ -64,33 +74,31 @@ import { reactive, ref } from 'vue'
     },
   }
 
-
-
   let toggleEditInfo = () => {
     editInfo.value = !editInfo.value;
 
     if (editInfo.value) {
-      editPassword.value = false;
+      newPassword.value = false;
     }
   }
 
   let toggleEditPassword = () => {
-    editPassword.value = !editPassword.value;
+    newPassword.value = !newPassword.value;
 
-    if (editPassword.value) {
+    if (newPassword.value) {
       editInfo.value = false;
     }
   }
 
   let cancelEdit = () => {
     editInfo.value = false;
-    editPassword.value = false;
+    newPassword.value = false;
     clear();
   }
 
   let submitEdit = () => {
     editInfo.value = false;
-    editPassword.value = false;
+    newPassword.value = false;
     clear();
   }
 
@@ -98,8 +106,8 @@ import { reactive, ref } from 'vue'
     infoEditForm.value.name = "";
     infoEditForm.value.profile = "";
     passwordEditForm.value.currentPassword = "";
-    passwordEditForm.value.editPassword = "";
-    passwordEditForm.value.editPasswordConfirm = "";
+    passwordEditForm.value.newPassword = "";
+    passwordEditForm.value.newPasswordConfirm = "";
   }
 </script>
 
@@ -113,37 +121,43 @@ import { reactive, ref } from 'vue'
 
     <hr class="w-25" />
 
-    <label class="inputLabel" v-if="!editPassword">
+    <label class="inputLabel mb-3" v-if="!newPassword">
       <span class="ms-2 fw-light">Name</span>
-      <input class="mx-auto mt-1 mb-3" type="text" id="name" placeholder="Enter edit name" v-model="infoEditForm.name" :disabled="!editInfo" />
+      <input class="mx-auto mt-1" type="text" id="name" placeholder="Enter edit name" v-model="infoEditForm.name" :disabled="!editInfo" @blur="infoVerification.name" />
+      <div v-show="invalid.name" class="is-invalid">변경할 이름을 입력해주세요.</div>
     </label>
 
-    <label class="inputLabel" v-if="!editPassword">
+    <label class="inputLabel mb-3" v-if="!newPassword">
       <span class="ms-2 fw-light">Profile</span>
-      <input class="mx-auto mt-1 mb-3" type="email" id="email" placeholder="Enter edit profile"  v-model="infoEditForm.name"  :disabled="!editInfo" />
+      <input class="mx-auto mt-1" type="email" id="email" placeholder="Enter edit profile"  v-model="infoEditForm.profile"  :disabled="!editInfo" @blur="infoVerification.profile" />
+      <div v-show="invalid.profile" class="is-invalid">변경할 이미지를 업로드 해주세요.</div>
     </label>
 
-    <label class="inputLabel" v-if="editPassword">
+    <label class="inputLabel mb-3" v-if="newPassword">
       <span class="ms-2 fw-light">Current Password</span>
-      <input class="mx-auto mt-1 mb-3" type="text" id="name" placeholder="Enter current password" v-model="passwordEditForm.currentPassword" />
+      <input class="mx-auto mt-1" type="text" id="name" placeholder="Enter current password" v-model="passwordEditForm.currentPassword" :disabled="editInfo" @blur="passwordVerification.currentPassword" />
+      <div v-show="invalid.currentPassword" class="is-invalid">현재 비밀번호를 입력하세요.</div>
     </label>
 
-    <label class="inputLabel" v-if="editPassword">
+    <label class="inputLabel mb-3" v-if="newPassword">
       <span class="ms-2 fw-light">Edit Password</span>
-      <input class="mx-auto mt-1 mb-3" type="email" id="email" placeholder="Enter edit password"  v-model="passwordEditForm.editPassword" />
+      <input class="mx-auto mt-1" type="email" id="email" placeholder="Enter edit password"  v-model="passwordEditForm.newPassword" :disabled="editInfo" @blur="passwordVerification.newPassword" />
+      <div v-show="invalid.newPassword" class="is-invalid">새로운 비밀번호를 입력하세요.</div>
+      <div v-show="invalid.passwordRule" class="is-invalid">비밀번호 형식이 올바르지 않습니다.(문자, 숫자, 특수문자 포함 8~15글자)</div>
     </label>
 
-    <label class="inputLabel" v-if="editPassword">
+    <label class="inputLabel mb-3" v-if="newPassword">
       <span class="ms-2 fw-light">Edit Password Again</span>
-      <input class="mx-auto mt-1 mb-3" type="email" id="email" placeholder="Enter confirm password"  v-model="passwordEditForm.editPasswordConfirm" />
+      <input class="mx-auto mt-1" type="email" id="email" placeholder="Enter confirm password"  v-model="passwordEditForm.newPasswordConfirm" :disabled="editInfo" @blur="passwordVerification.newPasswordConfirm" />
+      <div v-show="invalid.passwordConfirm" class="is-invalid">비밀번호가 일치하지 않습니다.</div>
     </label>
 
     <div class="d-flex justify-content-between mt-3" id="buttonRow">
-      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="toggleEditPassword" v-if="!editPassword && !editInfo">Change Password</button>
-      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="toggleEditInfo" v-if="!editPassword && !editInfo">Change Info</button>
+      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="toggleEditPassword" v-if="!newPassword && !editInfo">Change Password</button>
+      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="toggleEditInfo" v-if="!newPassword && !editInfo">Change Info</button>
 
-      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="cancelEdit" v-if="editPassword || editInfo">Cancel</button>
-      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="submitEdit" v-if="editPassword || editInfo">Ok</button>
+      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="cancelEdit" v-if="newPassword || editInfo">Cancel</button>
+      <button type="button" class="btn btn-warning rounded-5 fw-bolder" @click="submitEdit" v-if="newPassword || editInfo">Ok</button>
     </div>
   </div>
 </template>
@@ -187,4 +201,11 @@ import { reactive, ref } from 'vue'
   .inputLabel, #buttonRow {
     width: 40%;
   }
+
+  .is-invalid {
+    color: red;
+    margin-left:  5px;
+    font-size: 0.7rem;
+  }
+
 </style>
