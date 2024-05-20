@@ -2,7 +2,6 @@
 import { reactive, ref } from 'vue'
 import { useUserStore } from '@/stores/user.js'
 import axios from 'axios'
-import router from '@/router/index.js'
 
   let userStore = useUserStore()
   let editInfo = ref(false);

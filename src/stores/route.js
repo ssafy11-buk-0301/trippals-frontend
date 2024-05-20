@@ -21,8 +21,31 @@ export const useRouteStore = defineStore("routeStore", () => {
     return route.value.name !== '' && route.value.overview !== '' && route.value.startDate !== null;
   }
 
-  const update = () => {
+  const update = async () => {
+    let formData = new FormData();
+    formData.set("name", route.value.name);
+    formData.set("overview", route.value.overview);
+    formData.set("startDate", route.value.startDate);
+    if (route.value.thumbnailFile)
+      formData.set("thumbnail", route.value.thumbnailFile);
+    console.log(route.value);
 
+    try {
+      const response = await axios.post(`${baseUrl}/routes/${route.value.seq}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if (response.status === 200) {
+        findRoutes();
+      } else {
+        alert('업데이트에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Error uploading data:', error);
+      alert('업데이트에 실패했습니다.');
+    }
   }
 
   return {
