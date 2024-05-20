@@ -1,9 +1,12 @@
 <script setup>
 import { computed } from 'vue'
 import router from '@/router/index.js'
+import { useRouteStore } from '@/stores/route.js'
 
 let { route } = defineProps({route: Object})
 console.log(route)
+
+let routeStore = useRouteStore();
 
 let emits = defineEmits(['getEditForm'])
 let date = computed(() => {
@@ -11,18 +14,19 @@ let date = computed(() => {
   return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
 })
 let getEditForm = () => {
-  emits('getEditForm', route)
+  routeStore.route = JSON.parse(JSON.stringify(route));
+  emits('getEditForm')
 }
 
 let moveDetailPage = () => {
-  router.push("/routes/" + route.routeId)
+  router.push("/routes/" + route.seq)
 }
 
 </script>
 
 <template>
   <div class="card my-5 d-flex flex-row align-items-center">
-    <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${route.thumbnail})` }" @click="moveDetailPage"></div>
+    <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${route.thumbnailUrl})` }" @click="moveDetailPage"></div>
     <div class="h-100 ms-5 col-2 overflow-y-auto" @click="moveDetailPage">
       <p class="fs-4 fw-bold">{{ route.name  }}</p>
       <p class="date">{{ date }} ~</p>

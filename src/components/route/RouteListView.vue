@@ -7,8 +7,6 @@ import { ref } from 'vue'
 let routeStore = useRouteStore()
 routeStore.findRoutes()
 
-let routeRef = ref({})
-
 let dialogProps = ref({
   title: "UpdateRoute",
   content: "Update route information.",
@@ -16,16 +14,21 @@ let dialogProps = ref({
 let visible = ref(false)
 
 let updateRoute = () => {
-  visible.value = false;
-  console.log(JSON.stringify(routeRef.value))
+  if (routeStore.canUpdate()) {
+    visible.value = false;
+    routeStore.update();
+  } else {
+    alert("입력이 올바르지 않습니다.");
+  }
+  routeStore.findRoutes()
 }
 
 let cancelUpdateRoute = () => {
+  routeStore.route = {};
   visible.value = false;
 }
 
-let getEditForm = (routeVal) => {
-  routeRef.value = routeVal;
+let getEditForm = () => {
   visible.value = true;
 }
 
@@ -35,7 +38,7 @@ let getEditForm = (routeVal) => {
   <div class="container px-3" id="tripList">
     <RouteCard v-for="route in routeStore.routeList" :key="route.seq" :route="route" @getEditForm="getEditForm" />
   </div>
-  <RouteFormDialog v-model:dialogProps="dialogProps" v-model:route="routeRef" v-model:visible="visible"
+  <RouteFormDialog v-model:dialogProps="dialogProps" v-model:route="routeStore.route" v-model:visible="visible"
                    @dialogOk="updateRoute" @dialogCancel="cancelUpdateRoute" />
 </template>
 
