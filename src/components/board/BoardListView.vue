@@ -4,9 +4,11 @@ import { useBoardStore } from '@/stores/board'
 import BoardCard from '@/components/board/BoardCard.vue'
 const store = useBoardStore()
 const router = useRouter()
+store.listBoard()
 const detailPage = (board) => {
+  store.detailBoard(board)
   router.push({
-    path: `/boards/${board.boardId}`
+    path: `/boards/${board.seq}`
   })
 }
 //mount list

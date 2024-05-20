@@ -7,6 +7,15 @@ let baseUrl = "http://localhost:8080";
 export const useRouteStore = defineStore("routeStore", () => {
   let routeList = ref([]);
   let route = ref({})
+  const sel_route=reactive({
+    title: 'sel',
+    startDate: new Date(),
+    thumbnail: '',
+    overview: '',
+    routeId: '',
+  });
+  const setRouteRefValue = (newValue) => {
+   sel_route.value = newValue}
 
   const findRoutes = async () => {
     try {
@@ -112,5 +121,7 @@ export const useRouteStore = defineStore("routeStore", () => {
     create,
     update,
     remove
+    sel_route,
+    setRouteRefValue
   }
 })
