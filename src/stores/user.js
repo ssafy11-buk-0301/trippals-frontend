@@ -52,12 +52,24 @@ export const useUserStore =
       return user.value.name !== undefined;
     })
 
+    const getUserDetails = async () => {
+      try {
+        let response = await axios.get(baseUrl + `/users/${user.value.seq}`)
+        console.log(response.data);
+        return response.data
+      } catch (e) {
+        console.log(`error: ${JSON.stringify(e.response.data)}`);
+      }
+      return null;
+    }
+
     return {
       user,
       confirm,
       signUp,
       login,
       logout,
-      isLogin
+      isLogin,
+      getUserDetails
     }
   })

@@ -1,18 +1,26 @@
 <script setup>
 import { reactive, ref } from 'vue'
+import { useUserStore } from '@/stores/user.js'
 
+  let userStore = useUserStore()
   let editInfo = ref(false);
   let newPassword = ref(false);
 
-  let passwordEditForm = reactive({
+  let userInfo = ref({});
+  let infoEditForm = ref({
+    name: "",
+    profile: "",
+  });
+  userStore.getUserDetails().then(userDetail => {
+    userInfo.value = userDetail;
+    infoEditForm.value.name = userDetail.name;
+    infoEditForm.value.profile = userDetail.profileImage;
+  })
+
+  let passwordEditForm = ref({
     currentPassword: "",
     newPassword: "",
     newPasswordConfirm: "",
-  });
-
-  let infoEditForm = reactive({
-    name: "",
-    profile: "",
   });
 
   const invalid = reactive({
@@ -28,7 +36,7 @@ import { reactive, ref } from 'vue'
   const passwordVerification = {
 
       currentPassword: () => {
-        if (!passwordEditForm.currentPassword || passwordEditForm.currentPassword === "") {
+        if (!passwordEditForm.value.currentPassword || passwordEditForm.value.currentPassword === "") {
           invalid.currentPassword = true;
         } else {
           invalid.currentPassword = false;
@@ -40,15 +48,15 @@ import { reactive, ref } from 'vue'
         invalid.passwordRule = false;
 
         const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/
-        if (!passwordEditForm.newPassword || passwordEditForm.newPassword === "") {
+        if (!passwordEditForm.value.newPassword || passwordEditForm.value.newPassword === "") {
           invalid.newPassword = true;
-        } else if(!regex.test(passwordEditForm.newPassword)) {
+        } else if(!regex.test(passwordEditForm.value.newPassword)) {
           invalid.passwordRule = true;
         }
       },
 
       passwordConfirm: () => {
-        if (invalid.newPassword || passwordEditForm.newPassword !== passwordEditForm.newPasswordConfirm) {
+        if (invalid.newPassword || passwordEditForm.value.newPassword !== passwordEditForm.value.newPasswordConfirm) {
           invalid.passwordConfirm = true;
         } else {
           invalid.passwordConfirm = false;
@@ -58,7 +66,7 @@ import { reactive, ref } from 'vue'
 
   let infoVerification = {
     name: () => {
-      if (!infoEditForm.name || infoEditForm.name === "") {
+      if (!infoEditForm.value.name || infoEditForm.value.name === "") {
         invalid.name = true;
       } else {
         invalid.name = false;
@@ -66,7 +74,7 @@ import { reactive, ref } from 'vue'
     },
 
     profile: () => {
-      if (!infoEditForm.profile || infoEditForm.profile === "") {
+      if (!infoEditForm.value.profile || infoEditForm.value.profile === "") {
         invalid.profile = true;
       } else {
         invalid.profile = false;
@@ -114,8 +122,8 @@ import { reactive, ref } from 'vue'
 <template>
   <div class="container d-flex flex-column align-items-center">
     <div id="profileImage" class="border mx-auto mt-5"></div>
-    <h2 class="mt-2 text-center">송재원</h2>
-    <p class="mt-1 mb-4 text-center" id="emailInfo">fosong98@gmail.com</p>
+    <h2 class="mt-2 text-center">{{ userInfo.name }}</h2>
+    <p class="mt-1 mb-4 text-center" id="emailInfo">{{ userInfo.email }}</p>
 
     <h2 class="fw-bold text-center">Account</h2>
 
