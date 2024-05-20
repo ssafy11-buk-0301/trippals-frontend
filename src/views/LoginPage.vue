@@ -49,6 +49,8 @@
     if (Object.values(verification).every(e => !e || e)) {
       if (await userStore.login(loginForm)) {
         router.push('/');
+      } else {
+        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
       }
     } else {
       alert('입력이 잘못되었습니다.');
