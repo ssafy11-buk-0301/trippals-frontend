@@ -7,7 +7,7 @@ console.log(route)
 
 let emits = defineEmits(['getEditForm'])
 let date = computed(() => {
-  let dt = route.startDate;
+  let dt = new Date(route.startDate);
   return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
 })
 let getEditForm = () => {
@@ -24,7 +24,7 @@ let moveDetailPage = () => {
   <div class="card my-5 d-flex flex-row align-items-center">
     <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${route.thumbnail})` }" @click="moveDetailPage"></div>
     <div class="h-100 ms-5 col-2 overflow-y-auto" @click="moveDetailPage">
-      <p class="fs-4 fw-bold">{{ route.title  }}</p>
+      <p class="fs-4 fw-bold">{{ route.name  }}</p>
       <p class="date">{{ date }} ~</p>
     </div>
     <div class="h-100 align-items-center ms-5 w-50 overflow-y-auto overview px-2" @click="moveDetailPage">
