@@ -49,7 +49,7 @@ const selectImage = (event) => {
     <div v-show="routeStore.route.thumbnailFile === null" class="is-invalid ms-3 mt-0 pb-5">파일을 선택하세요.</div>
     <FloatLabel class="flex align-items-center gap-3 mt-4 w-100">
       <label for="startDate" class="font-semibold w-100">StartDate</label>
-      <Calendar id="startDate" v-model="routeStore.route.startDate" dateFormat="dd/mm/yy" />
+      <Calendar id="startDate" v-model="routeStore.route.startDate" date-format="yy-mm-dd" />
     </FloatLabel>
     <div v-show="routeStore.route.startDate === null" class="is-invalid ms-3 mt-0 mb-1">시작일을 입력하세요.</div>
     <div class="d-flex justify-content-end w-100">
