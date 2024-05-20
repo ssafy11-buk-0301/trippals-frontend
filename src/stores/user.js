@@ -82,11 +82,11 @@ export const useUserStore =
           user.value = response.data;
           console.log(response.data);
         } else {
-          alert('Failed to upload data');
+          alert('업데이트에 실패했습니다.');
         }
       } catch (error) {
         console.error('Error uploading data:', error);
-        alert('Failed to upload data');
+        alert('업데이트에 실패했습니다.');
       }
     }
 
