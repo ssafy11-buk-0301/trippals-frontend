@@ -35,6 +35,13 @@ let activatedNav = ref(0);
 
 const setNav = (num) => {
   activatedNav.value = num;
+  if (num == 2) {
+    attractionStore.festivalPageInfo.page = 0;
+    attractionStore.findFestivalList();
+  } else if (num == 3) {
+    attractionStore.accommodationPageInfo.page = 0;
+    attractionStore.findAccommodationList();
+  }
 }
 
 const moveMarker = (lat, lng) => {
