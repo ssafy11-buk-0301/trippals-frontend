@@ -5,8 +5,7 @@ import RouteFormDialog from '@/components/route/RouteFormDialog.vue'
 import { ref } from 'vue'
 
 let routeStore = useRouteStore()
-let routeList = routeStore.routeList
-
+routeStore.findRoutes()
 let routeRef = ref({})
 
 let dialogProps = ref({
@@ -33,7 +32,7 @@ let getEditForm = (routeVal) => {
 
 <template>
   <div class="container px-3" id="tripList">
-    <RouteSelCard v-for="route in routeList" :key="route.routeId" :route="route" :showButton="true" />
+    <RouteSelCard v-for="route in routeStore.routeList" :key="route.seq" :route="route" :showButton="true" />
   </div>
 </template>
 

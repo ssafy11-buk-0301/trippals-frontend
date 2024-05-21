@@ -9,10 +9,10 @@ export const useRouteStore = defineStore("routeStore", () => {
   let route = ref({})
   const sel_route=reactive({
     title: 'sel',
-    startDate: new Date(),
+    startDate: 'yy-mm-dd',
     thumbnail: '',
     overview: '',
-    routeId: '',
+    routeId: null,
   });
   const setRouteRefValue = (newValue) => {
    sel_route.value = newValue}
@@ -120,7 +120,7 @@ export const useRouteStore = defineStore("routeStore", () => {
     canUpdate,
     create,
     update,
-    remove
+    remove,
     sel_route,
     setRouteRefValue
   }

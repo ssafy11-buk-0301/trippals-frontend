@@ -6,7 +6,7 @@ const baseUrl = "http://localhost:8080"
 
 export const useUserStore =
   defineStore('user', ()=>{
-    let user = ref({name:'test'})
+    let user = ref({})
 
     const confirm = async (email) => {
       try {
