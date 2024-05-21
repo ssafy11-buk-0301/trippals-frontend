@@ -97,7 +97,7 @@ const boardInsert = async (isDraft) => {
 
   <div class="d-flex w-100 mt-1">
     <button class="btn btn-warning fw-bold ms-auto me-1" @click="boardInsert(true)">임시저장</button>
-    <button class="btn btn-warning fw-bold" @click="boardInsert(false)">글등록</button>
+    <button class="btn btn-warning fw-bold me-1" @click="boardInsert(false)">글등록</button>
     <button class="btn btn-warning fw-bold" @click="showRouteListModal">경로등록</button>
   </div>
   <!-- v-on:call-parent-insert="closeAfterInsert" -->
