@@ -2,14 +2,17 @@
 import { computed,ref } from 'vue'
 import router from '@/router/index.js'
 import { useRouteStore } from '@/stores/route';
+import RouteListModal from '../modals/RouteListModal.vue';
+import { useBoardStore } from '@/stores/board';
 const routeStore=useRouteStore()
 let { route,showButton } = defineProps({route:Object,showButton: Boolean})
+// console.log(route)
 
 let emits = defineEmits(['getEditForm'])
-let date = computed(() => {
-  let dt = route.startDate;
-  return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
-})
+// let date = computed(() => {
+//   let dt = route.startDate;
+//   return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
+// })
 
 let selCard=()=>{
   console.log(route)
@@ -18,18 +21,23 @@ let selCard=()=>{
 }
 
 let moveDetailPage = () => {
-  closeModal()
-  router.push("/routes/" + route.routeId)
+  console.log(route)
+  const boardStore=useBoardStore()
+  // boardStore.boardStore.modal_show=false
+  setTimeout(() => {
+    // router.push("/routes/" + route.seq);
+  }, 300);
+  // router.push("/routes/" + route.seq)
 }
 
 </script>
 
 <template>
   <div class="card my-5 d-flex flex-row align-items-center">
-    <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${route.thumbnail})` }" @click="moveDetailPage"></div>
+    <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${route.thumbnailUrl})` }" @click="moveDetailPage"></div>
     <div class="h-100 ms-5 col-2 overflow-y-auto" @click="moveDetailPage">
       <p class="fs-4 fw-bold">{{ route.title  }}</p>
-      <p class="date">{{ date }} ~</p>
+      <p class="date">{{ route.startDate }} ~</p>
     </div>
     <div class="h-100 align-items-center ms-5 w-50 overflow-y-auto overview px-2" @click="moveDetailPage">
       <p>{{ route.overview }}</p>

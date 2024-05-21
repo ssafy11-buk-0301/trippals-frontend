@@ -1,17 +1,19 @@
 <script setup>
 import { useUserStore } from '@/stores/user.js'
+import { useBoardStore } from '@/stores/board'
 import { useRoute } from 'vue-router'
 import { onMounted } from 'vue'
 import BoardInsert from '@/components/board/BoardInsert.vue'
 const store = useUserStore()
 const route = useRoute()
+const boardStore=useBoardStore()
 //로그인 정보 가져오기
 </script>
 
 <template>
   <div class="container">
     <!-- <h3 class="display-6 fw-bold mb-3 mt-3"></h3> -->
-    <input class="mb-3 mt-3" type="text" value="제목을 입력하세요" size="50" />
+    <input v-model="boardStore.board.title" class="mb-3 mt-3" type="text" value="제목을 입력하세요" size="50" />
     <BoardInsert />
   </div>
 </template>

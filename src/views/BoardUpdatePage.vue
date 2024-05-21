@@ -18,7 +18,7 @@ const route = useRoute()
       type="text"
       placeholder="제목 입력하세요"
       size="50"
-      :value="boardStore.board.title"
+      v-model="boardStore.board.title"
     />
     <BoardUpdate />
   </div>

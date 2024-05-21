@@ -5,7 +5,7 @@ const boardStore = useBoardStore()
 const router = useRouter()
 const updatePage = () => {
   router.push({
-    path: `/boards/update/${boardStore.board.boardId}`
+    path: `/boards/update/${boardStore.board.seq}`
   })
 }
 </script>
