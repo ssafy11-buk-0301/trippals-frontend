@@ -1,6 +1,10 @@
 <script setup>
 
 import AccommodationCard from '@/components/route/AccommodationCard.vue'
+import Paginator from 'primevue/paginator'
+import { useAttractionStore } from '@/stores/attraction.js'
+
+let attractionStore = useAttractionStore()
 
 let { accommodationList } = defineProps({ accommodationList: Object })
 let emits = defineEmits(["moveMarker"])
@@ -9,28 +13,17 @@ const moveMarker = (obj) => {
   emits("moveMarker", obj.latitude, obj.longitude)
 }
 
+let move = (event) => {
+  attractionStore.accommodationPageInfo.page = event.page;
+  attractionStore.findAccommodationList();
+};
+
 </script>
 
 <template>
   <AccommodationCard v-for="(accommodation, index) in accommodationList" :key="index" :accommodation="accommodation" @click="moveMarker(accommodation)"/>
 
-  <nav class="ms-auto w-100 my-5">
-    <ul class="pagination">
-      <li class="page-item ms-auto">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item"><a class="page-link active" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item me-auto">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <Paginator :rows="5" :totalRecords="attractionStore.accommodationPageInfo.totalContents" @page="move"></Paginator>
 </template>
 
 <style scoped>

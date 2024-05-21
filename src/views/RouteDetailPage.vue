@@ -10,27 +10,20 @@ import { useBoardStore } from '@/stores/board.js'
 import Sidebar from 'primevue/sidebar'
 import router from '@/router/index.js'
 import BoardCard from '@/components/board/BoardCard.vue'
+import ReviewListView from '@/components/route/ReviewListView.vue'
 
-let attractionStore = useAttractionStore()
+let attractionStore = useAttractionStore();
+
+attractionStore.findAttraction();
+attractionStore.findFestivalList();
+attractionStore.findAccommodationList();
+
 let boardStore = useBoardStore()
 
-let attractionList = attractionStore.attractionList
-let festivalList = attractionStore.festivalList
-let accommodationList = attractionStore.accommodationList
-
-let findBoard = ref([])
-const visible = ref(false);
+const boardVisible = ref(false);
 
 const showReview = (attraction) => {
-  findBoard.value = boardStore.findBoardByRouteId(attraction.routeId)
-  console.log(findBoard)
-  visible.value = true;
-}
-
-const detailPage = (board) => {
-  router.push({
-    path: `/boards/${board.boardId}`
-  })
+  boardVisible.value = true;
 }
 
 const coordinate = ref({
@@ -87,35 +80,13 @@ const moveMarker = (lat, lng) => {
     </ul>
 
     <Sidebar v-model:visible="visible" header="Bottom Sidebar" position="bottom" style="height: 70%; background-color: #F5F5E8;">
-      <BoardCard
-        v-for="(board, index) in findBoard"
-        :key="index"
-        :board="board"
-        @click="detailPage(board)"
-      />
-      <nav class="ms-auto w-100 my-5 pt-5">
-        <ul class="pagination">
-          <li class="page-item ms-auto">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link active" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item me-auto">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <ReviewListView />
     </Sidebar>
 
     <SearchedAttractionListView v-if="activatedNav === 0" :attractionList="attractionList" @moveMarker="moveMarker" @showReview="showReview" />
-    <AttractionListView v-if="activatedNav === 1" :attractionList="attractionList" @moveMarker="moveMarker" @showReview="showReview"/>
-    <FestivalListView v-else-if="activatedNav === 2" :festivalList="festivalList" @moveMarker="moveMarker" />
-    <AccommodationListView v-else-if="activatedNav === 3" :accommodationList="accommodationList" @moveMarker="moveMarker" />
+    <AttractionListView v-if="activatedNav === 1" :attractionList="attractionStore.attractionList" @moveMarker="moveMarker" @showReview="showReview"/>
+    <FestivalListView v-else-if="activatedNav === 2" :festivalList="attractionStore.festivalList" @moveMarker="moveMarker" />
+    <AccommodationListView v-else-if="activatedNav === 3" :accommodationList="attractionStore.accommodationList" @moveMarker="moveMarker" />
   </div>
 </template>
 
