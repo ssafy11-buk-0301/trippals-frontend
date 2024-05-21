@@ -23,7 +23,7 @@ let moveDetailPage = () => {
   <div class="card my-5 d-flex flex-row align-items-center">
     <div id="thumbnail" class="rounded-1 h-100" :style="{ backgroundImage: `url(${routeStore.sel_route.thumbnailUrl})` }" @click="moveDetailPage"></div>
     <div class="h-100 ms-5 col-2 overflow-y-auto" @click="moveDetailPage">
-      <p class="fs-4 fw-bold">{{ routeStore.sel_route.title  }}</p>
+      <p class="fs-4 fw-bold">{{ routeStore.sel_route.name  }}</p>
       <p class="date">{{ routeStore.sel_route.startDate }} ~</p>
     </div>
     <div class="h-100 align-items-center ms-5 w-50 overflow-y-auto overview px-2" @click="moveDetailPage">
