@@ -7,12 +7,12 @@ let baseUrl = "http://localhost:8080";
 export const useRouteStore = defineStore("routeStore", () => {
   let routeList = ref([]);
   let route = ref({})
-  const sel_route=reactive({
+  const sel_route=ref({
     title: 'sel',
     startDate: 'yy-mm-dd',
     thumbnail: '',
     overview: '',
-    routeId: null,
+    seq: null,
   });
   const setRouteRefValue = (newValue) => {
    sel_route.value = newValue}
