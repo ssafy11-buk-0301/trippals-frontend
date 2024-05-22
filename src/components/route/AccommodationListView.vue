@@ -3,13 +3,16 @@
 import AccommodationCard from '@/components/route/AccommodationCard.vue'
 import Paginator from 'primevue/paginator'
 import { useAttractionStore } from '@/stores/attraction.js'
+import { useMapStore } from '@/stores/map.js'
 
 let attractionStore = useAttractionStore()
 
 let emits = defineEmits(["moveMarker"])
 
+let mapStore = useMapStore()
+
 const moveMarker = (obj) => {
-  emits("moveMarker", obj.latitude, obj.longitude)
+  mapStore.moveMarker(obj.latitude, obj.longitude, obj.title)
 }
 
 let move = (event) => {

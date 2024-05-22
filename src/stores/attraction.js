@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
+import { useMapStore } from '@/stores/map.js'
 
 let baseUrl = "http://localhost:8080";
 let pathUrI = window.location.pathname;
@@ -18,8 +19,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
     try {
       let response = await axios.get(`${baseUrl}${pathUrI}/attractions`)
       attractionList.value = response.data;
-      findFestivalList();
-      findAccommodationList();
+      useMapStore().generateMarker(attractionList.value);
     } catch (e) {
       console.log(e);
     }
@@ -28,7 +28,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
   let addAttraction = async (contentId) => {
     try {
       await axios.post(`${baseUrl}${pathUrI}/attractions/${contentId}`);
-      findAttraction();
+      await findAttraction();
     } catch (e) {
       if (e.response.data.message)
         alert(e.response.data.message);
@@ -39,7 +39,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
   let deleteAttraction = async (contentId) => {
     try {
       await axios.delete(`${baseUrl}${pathUrI}/attractions/${contentId}`);
-      findAttraction();
+      await findAttraction();
     } catch (e) {
       if (e.response.data.message)
         alert(e.response.data.message);
@@ -56,6 +56,8 @@ export const useAttractionStore = defineStore('attractionStore', () => {
       festivalList.value = contents;
       festivalPageInfo.value.page = pageData.page;
       festivalPageInfo.value.totalContents = pageData.totalContents;
+
+      useMapStore().generateSearchMarker(festivalList.value);
     } catch (e) {
       console.log(e);
     }
@@ -70,6 +72,9 @@ export const useAttractionStore = defineStore('attractionStore', () => {
       accommodationList.value = contents;
       accommodationPageInfo.value.page = pageData.page;
       accommodationPageInfo.value.totalContents = pageData.totalContents;
+
+      useMapStore().generateSearchMarker(accommodationList.value);
+
     } catch (e) {
       if (e.response.data.message)
         alert(e.response.data.message);
@@ -80,7 +85,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
   let changeAttractionOrder = async (from, to) => {
     try {
       await axios.put(`${baseUrl}${pathUrI}/attractions/${from}/${to}`)
-      findAttraction();
+      await findAttraction();
     } catch (e) {
       if (e.response.data.message)
         alert(e.response.data.message);

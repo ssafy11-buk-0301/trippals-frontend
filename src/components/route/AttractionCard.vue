@@ -1,12 +1,13 @@
 <script setup>
 import { useAttractionStore } from '@/stores/attraction.js'
+import { useMapStore } from '@/stores/map.js'
 
 const { attraction } = defineProps({ attraction: Object})
 
-let emits = defineEmits(["moveMarker", "showReview"])
+let mapStore = useMapStore()
 
 const moveMarker = () => {
-  emits("moveMarker", attraction)
+  mapStore.moveMarker(attraction.latitude, attraction.longitude)
 }
 
 const showReview = (obj) => {

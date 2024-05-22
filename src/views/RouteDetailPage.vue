@@ -10,13 +10,14 @@ import { useBoardStore } from '@/stores/board.js'
 import Sidebar from 'primevue/sidebar'
 import ReviewListView from '@/components/route/ReviewListView.vue'
 import { useAttractionSearchStore } from '@/stores/attractionSearch.js'
+import MapView from '@/components/route/MapView.vue'
+import { useMapStore } from '@/stores/map.js'
 
 let attractionStore = useAttractionStore();
 let attractionSearchStore = useAttractionSearchStore();
+let mapStore = useMapStore();
 
 attractionStore.findAttraction();
-attractionStore.findFestivalList();
-attractionStore.findAccommodationList();
 
 attractionSearchStore.getSidocodeList();
 
@@ -26,28 +27,31 @@ const showReview = (attraction) => {
   boardVisible.value = true;
 }
 
-const coordinate = ref({
-  lat: 37.566826,
-  lng: 126.9786567
-});
-
 let activatedNav = ref(0);
 
 const setNav = (num) => {
   activatedNav.value = num;
-  if (num === 2) {
-    attractionStore.festivalPageInfo.page = 0;
-    attractionStore.findFestivalList();
-  } else if (num === 3) {
-    attractionStore.accommodationPageInfo.page = 0;
-    attractionStore.findAccommodationList();
+  switch (num) {
+    case 0: {
+      attractionSearchStore.attractionPageInfo.page = 0;
+      attractionSearchStore.searchAttraction();
+      break;
+    }
+    case 1: {
+      attractionStore.findAttraction();
+      break;
+    }
+    case 2: {
+      attractionStore.festivalPageInfo.page = 0;
+      attractionStore.findFestivalList();
+      break;
+    }
+    case 3: {
+      attractionStore.accommodationPageInfo.page = 0;
+      attractionStore.findAccommodationList();
+      break;
+    }
   }
-}
-
-const moveMarker = (lat, lng) => {
-  coordinate.value.lat = lat;
-  coordinate.value.lng = lng;
-  window.scrollTo({top:0, left:0, behavior:'auto'});
 }
 </script>
 
@@ -71,13 +75,11 @@ const moveMarker = (lat, lng) => {
       <input class="me-2 col-5" type="text" id="searchKeyword" placeholder="검색어를 입력하세요." v-model="attractionSearchStore.keyword" />
 
       <button class="btn btn-warning rounded-5 fw-bolder col-2"
-              @click="attractionSearchStore.attractionPageInfo.page=0;attractionSearchStore.searchAttraction()">
+              @click="attractionSearchStore.attractionPageInfo.page=0;attractionSearchStore.searchAttraction();setNav(0)">
         검색</button>
     </div>
 
-    <KakaoMap :lat="coordinate.lat" :lng="coordinate.lng" :draggable="true" class="w-100 rounded-5 border mb-3">
-      <KakaoMapMarker :lat="coordinate.lat" :lng="coordinate.lng"></KakaoMapMarker>
-    </KakaoMap>
+    <MapView />
 
     <ul class="nav nav-tabs justify-content-center" id="boardNav">
       <li class="nav-item">
@@ -98,10 +100,10 @@ const moveMarker = (lat, lng) => {
       <ReviewListView />
     </Sidebar>
 
-    <SearchedAttractionListView v-if="activatedNav === 0" @moveMarker="moveMarker" @showReview="showReview" />
-    <AttractionListView v-if="activatedNav === 1" @moveMarker="moveMarker" @showReview="showReview"/>
-    <FestivalListView v-else-if="activatedNav === 2" @moveMarker="moveMarker" />
-    <AccommodationListView v-else-if="activatedNav === 3" @moveMarker="moveMarker" />
+    <SearchedAttractionListView v-if="activatedNav === 0" @showReview="showReview" />
+    <AttractionListView v-if="activatedNav === 1" @showReview="showReview"/>
+    <FestivalListView v-else-if="activatedNav === 2" />
+    <AccommodationListView v-else-if="activatedNav === 3" />
   </div>
 </template>
 

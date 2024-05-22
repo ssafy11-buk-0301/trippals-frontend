@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
+import { useMapStore } from '@/stores/map.js'
 
 let baseUrl = "http://localhost:8080";
 
@@ -48,8 +49,7 @@ export let useAttractionSearchStore = defineStore('attractionSearchStore', () =>
       attractionList.value = contents;
       attractionPageInfo.value.page = pageData.page;
       attractionPageInfo.value.totalContents = pageData.totalContents;
-
-      console.log(attractionPageInfo)
+      useMapStore().generateSearchMarker(attractionList.value);
     } catch (e) {
       console.log(e);
     }

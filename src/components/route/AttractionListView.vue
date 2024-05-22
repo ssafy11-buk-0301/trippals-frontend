@@ -3,13 +3,7 @@ import AttractionCard from '@/components/route/AttractionCard.vue'
 import { useAttractionStore } from '@/stores/attraction.js'
 import { Container, Draggable } from 'vue3-smooth-dnd';
 
-let emits = defineEmits(["moveMarker"])
-
 let attractionStore = useAttractionStore()
-
-const moveMarker = (obj) => {
-  emits("moveMarker", obj.latitude, obj.longitude)
-}
 
 const showReview = (obj) => {
   emits("showReview", obj)
@@ -25,7 +19,7 @@ const onDrop = (dropResult) => {
 <template>
   <Container @drop="onDrop">
     <Draggable  v-for="(attraction, index) in attractionStore.attractionList" :key="index">
-      <AttractionCard :attraction="attraction" @moveMarker="moveMarker" @showReview="showReview" />
+      <AttractionCard :attraction="attraction" @showReview="showReview" />
     </Draggable>
   </Container>
 
