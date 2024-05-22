@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BoardListView from '@/components/board/BoardListView.vue'
 import PaginationUI from '@/components/board/PaginationUI.vue'
 import { useBoardStore } from '@/stores/board'
-const { boardStore, listBySearch,listBoard, setBoardMovePage } = useBoardStore()
+const { boardStore, listBoard, setBoardMovePage } = useBoardStore()
 
 const router = useRouter()
 const insertBoardPage = () => {
@@ -38,10 +38,6 @@ const movePage = (pageIndex) => {
   setBoardMovePage(pageIndex)
   listBoard()
 }
-// onMounted(()=>{
-//   let searchWord=document.querySelector('#searchWord').value
-// })
-
 </script>
 
 <template>
@@ -54,13 +50,12 @@ const movePage = (pageIndex) => {
       <input
         type="text"
         class="form-control searchForm"
-        id="searchWord"
+        id="searchKeyword"
         aria-describedby="inputGroupFileAddon04"
         aria-label="Upload"
         v-model="boardStore.searchWord"
       />
-      <!--  -->
-      <button @click="listBySearch()" class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
+      <button @click="listBoard()" class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
     </div>
     <div class="d-flex w-100">
       <button class="btn btn-warning fw-bold ms-auto" @click="insertBoardPage">글쓰기</button>

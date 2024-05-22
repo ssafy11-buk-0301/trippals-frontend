@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button @click="setRoute" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">등록</button>
+          <button @click="boardInsert" class="btn btn-sm btn-primary btn-outline" data-dismiss="modal" type="button">등록</button>
         </div>
       </div>
     </div>
@@ -29,17 +29,7 @@
 <script setup>
 import RouteSelListView from '../route/RouteSelListView.vue';
 import RouteSelRefCard from '../route/RouteSelRefCard.vue';
-import { useRouteStore } from '@/stores/route';
-import { useBoardStore } from '@/stores/board';
 
-const routeStore=useRouteStore()
-const boardStore=useBoardStore()
-const emit = defineEmits(['call-parent-insert'])
-const closeModal = () => emit('call-parent-insert')
-const setRoute=()=>{
-  //card통해서 sel_route에 담김
-  closeModal()
-}
 </script>
 
 <style scoped>

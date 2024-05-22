@@ -6,7 +6,7 @@ const store = useBoardStore()
 const router = useRouter()
 store.listBoard()
 const detailPage = (board) => {
-  store.detailBoard(board.seq)
+  store.detailBoard(board)
   router.push({
     path: `/boards/${board.seq}`
   })

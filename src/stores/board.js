@@ -2,10 +2,9 @@ import { defineStore } from 'pinia'
 import axios from '@/axios/axios-config'
 import { ref ,reactive,computed} from 'vue'
 import { useRouter } from 'vue-router'
-import { useRouteStore } from './route'
+
 export const useBoardStore = defineStore('boardStore', () => {
   const router=useRouter()
-  const routerStore=useRouteStore()
   const board = ref({
     thumbnail:
       'https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg',
@@ -21,7 +20,6 @@ export const useBoardStore = defineStore('boardStore', () => {
     return board.value.regDt.getFullYear() + '-' + (board.value.regDt.getMonth() + 1) + '-' + board.value.regDt.getDate()
   })
   const boardStore = reactive({
-    modal_show:true,
     // list
     list: [],
     limit: 10,
@@ -82,11 +80,7 @@ export const useBoardStore = defineStore('boardStore', () => {
     boardStore.currentPageIndex = pageIndex
   }
   //pagination end
-  const listBySearch=async ()=>{
-    setBoardMovePage(1)
-    console.log('listBySearch')
-    await listBoard()
-  }
+
   const listBoard = async () => {
     // 목록
     
@@ -114,47 +108,44 @@ export const useBoardStore = defineStore('boardStore', () => {
       console.log(error)
     }
   }
-  // const insertBoard = async () => {
-  //   // fetch + rest api
-  //   // /boards POST
-  //   axios
-  //     .post('/boards', board.value)
-  //     .then(function () {
-  //       router.push('/boards')
-  //       listBoard()
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error)
-  //     })
-  // }
+  const insertBoard = async () => {
+    // fetch + rest api
+    // /boards POST
+    axios
+      .post('/boards', board.value)
+      .then(function () {
+        router.push('/boards')
+        listBoard()
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
   const deleteBoard = async () => {
-    let url = '/boards/' + board.value.seq
+    let url = '/boards/' + board.value.boardId
 
     // fetch + rest api
     // /boards DELETE
-    // if (confirm('이 글을 삭제하시겠습니까?')) {
-      axios
+    axios
       .delete(url)
       .then(() => {
-        router.push('/boards')
         listBoard()
       })
       .catch((error) => {
         console.log(error)
       })
-    // }
   }
   const updateBoard = async () => {
     // fetch + rest api
     // /boards PUT
-    let url = '/boards/' + board.value.seq
+    let url = '/boards/' + board.value.boardId
 
     axios
-      .post(url, board.value)
+      .put(url, board.value)
       .then(listBoard)
       .catch((error) => console.log(error))
   }
-  const baseUrl = "http://localhost:8080";
+
   const detailBoard = async (boardId) => {
     // 상세
     // get /boards/123
@@ -165,17 +156,8 @@ export const useBoardStore = defineStore('boardStore', () => {
       let response = await axios(url)
       let { data } = response
       data.dto.regDt=new Date(data.dto.regDt)
-      data.dto.thumbnailUrl = `${baseUrl}/images/${data.dto.thumbnail}`;
       board.value=data.dto
-  
-      routerStore.sel_route.title=data.dto.routeName
-      routerStore.sel_route.startDate=new Date(data.dto.startDate)
-      routerStore.sel_route.overview=data.dto.overview
-      routerStore.sel_route.thumbnail=data.dto.thumbnail
-      routerStore.sel_route.thumbnailUrl=data.dto.thumbnailUrl
-      routerStore.sel_route.routeId=data.dto.routeSeq
-
-      console.log(board.value)
+      console.log(board.value.regDt.getFullYear())
     } catch (error) {
       console.log(error)
     }
@@ -192,8 +174,8 @@ export const useBoardStore = defineStore('boardStore', () => {
   return {
     boardStore,date,
     detailBoard,
-    listBoard,listBySearch,
-    // insertBoard,
+    listBoard,
+    insertBoard,
     updateBoard,
     deleteBoard,
     findBoardByRouteId,

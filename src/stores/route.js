@@ -1,22 +1,21 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import axios from 'axios'
+import router from '@/router/index.js'
 
 let baseUrl = "http://localhost:8080";
 export const useRouteStore = defineStore("routeStore", () => {
   let routeList = ref([]);
-
   let route = ref({})
-  const sel_route=ref({
+  const sel_route=reactive({
     title: 'sel',
-    startDate: 'yy-mm-dd',
+    startDate: new Date(),
     thumbnail: '',
     overview: '',
-    seq: null,
+    routeId: '',
   });
   const setRouteRefValue = (newValue) => {
    sel_route.value = newValue}
-
 
   const findRoutes = async () => {
     try {
@@ -121,7 +120,7 @@ export const useRouteStore = defineStore("routeStore", () => {
     canUpdate,
     create,
     update,
-    remove,
+    remove
     sel_route,
     setRouteRefValue
   }
