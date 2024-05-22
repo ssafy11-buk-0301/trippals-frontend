@@ -37,7 +37,7 @@ let board = {
   registerDate: new Date('2024-05-01'),
   writer: 'fosong'
 }
-let boardList = ref([board, board, board, board, board])
+// let boardList = ref([board, board, board, board, board])
 const movePage = (pageIndex) => {
   console.log('BoardMainVue : movePage : pageIndex : ' + pageIndex)
   setBoardMovePage(pageIndex)
@@ -66,7 +66,7 @@ const movePage = (pageIndex) => {
         v-model="boardStore.searchWord"
       />
       <!--  -->
-      <button @click="listBySearch()" class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
+      <button @click="listBySearch('main')" class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
     </div>
     <div class="d-flex w-100">
       <button class="btn btn-warning fw-bold ms-auto me-1" @click="insertBoardPage">글쓰기</button>

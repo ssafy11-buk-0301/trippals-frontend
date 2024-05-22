@@ -6,6 +6,8 @@ import { useRouteStore } from './route'
 export const useBoardStore = defineStore('boardStore', () => {
   const router=useRouter()
   const routerStore=useRouteStore()
+  let bestBoard = ref([]);
+  let latestBoard = ref([]);
   const board = ref({
     thumbnail:
       'https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg',
@@ -84,10 +86,20 @@ export const useBoardStore = defineStore('boardStore', () => {
     boardStore.currentPageIndex = pageIndex
   }
   //pagination end
-  const listBySearch=async ()=>{
+  const listBySearch=async (purpose)=>{
     setBoardMovePage(1)
-    console.log('listBySearch')
     await listBoard()
+    if(purpose=='main') router.push({path:'/boards'})
+  }
+
+  const listBestBoard=async ()=>{
+    boardStore.orderBy='read_count'
+    boardStore.limit=4
+    await listBoard('mainB')
+  }
+  const listLatestBoard= async()=>{
+    boardStore.limit=4
+    await listBoard('mainL')
   }
   const listBookmarkAfterInsert=()=>{
     setBoardMovePage(1)
@@ -119,7 +131,7 @@ export const useBoardStore = defineStore('boardStore', () => {
       alert(error.reponse.data.message)
     }
   }
-  const listBoard = async () => {
+  const listBoard = async (purpose) => {
     // 목록
     
     let params = {
@@ -142,6 +154,14 @@ export const useBoardStore = defineStore('boardStore', () => {
         e.regDt=new Date(e.regDt)
       })
       // console.log(data)
+      if(purpose=='mainL') latestBoard.value=data.list
+      else if(purpose=='mainB'){
+        bestBoard.value=data.list;
+        boardStore.limit=10;
+        boardStore.orderBy='reg_dt'}
+
+      if(purpose) return
+
       boardList.value = data.list
       setTotalListItemCount(data.count)
       
@@ -243,7 +263,7 @@ export const useBoardStore = defineStore('boardStore', () => {
   }
 
   return {
-    boardStore,date,
+    boardStore,date,latestBoard,bestBoard,listBestBoard,listLatestBoard,
     detailBoard,
     listBoard,listBySearch,listBookmark,listBookmarkAfterInsert,deleteBookmark,
     // insertBoard,
