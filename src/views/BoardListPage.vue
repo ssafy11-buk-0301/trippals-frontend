@@ -13,6 +13,8 @@ const insertBoardPage = () => {
   })
 }
 const bookmarkPage = () => {
+  setBoardMovePage(1)
+  boardStore.offset=0
   router.push({
     path: '/boards/bookmark'
   })
@@ -66,7 +68,7 @@ const movePage = (pageIndex) => {
         v-model="boardStore.searchWord"
       />
       <!--  -->
-      <button @click="listBySearch('main')" class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
+      <button @click="listBySearch()" class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
     </div>
     <div class="d-flex w-100">
       <button class="btn btn-warning fw-bold ms-auto me-1" @click="insertBoardPage">글쓰기</button>

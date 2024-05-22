@@ -87,8 +87,8 @@ export const useBoardStore = defineStore('boardStore', () => {
   }
   //pagination end
   const listBySearch=async (purpose)=>{
-    setBoardMovePage(1)
     await listBoard()
+    setBoardMovePage(1)
     if(purpose=='main') router.push({path:'/boards'})
   }
 
@@ -146,7 +146,7 @@ export const useBoardStore = defineStore('boardStore', () => {
       let response = await axios.get('/boards',{params})
       // console.log(response)
       let { data } = response
-      console.log(data.list)
+      console.log(data)
       data.list.forEach((e)=>{
         e.thumbnailUrl = `${baseUrl}/images/noThumbnail.png`;
         if(e.thumbnail)e.thumbnailUrl = `${baseUrl}/images/${e.thumbnail}`;
@@ -160,7 +160,9 @@ export const useBoardStore = defineStore('boardStore', () => {
         boardStore.limit=10;
         boardStore.orderBy='reg_dt'}
 
-      if(purpose) return
+      if(purpose) {
+        setTotalListItemCount(data.count); return
+      }
 
       boardList.value = data.list
       setTotalListItemCount(data.count)

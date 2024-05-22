@@ -36,7 +36,7 @@ setList()
 
         <div class="input-group">
           <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" v-model="store.boardStore.searchWord" />
-          <button @click="store.listBySearch()" type="button" class="btn btn-primary">search</button>
+          <button @click="store.listBySearch('main')" type="button" class="btn btn-primary">search</button>
         </div>
       </div>
     </div>
