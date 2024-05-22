@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import MainCard from '@/components/MainCard.vue'
+import { useRouteStore } from '@/stores/route.js'
+import { useUserStore } from '@/stores/user.js'
 
 let bestBoard = ref([
   {thumbnail: 'https://wimg.mk.co.kr/meet/neds/2020/05/image_readtop_2020_506007_15897737584203733.jpg', title: '`포스트 코로나 워너비 여행지`, 전세계 1위로 꼽힌 나라가?' },
@@ -16,6 +18,8 @@ let latestBoard = ref([
   {thumbnail: 'https://statics.vinpearl.com/%EB%B2%A0%ED%8A%B8%EB%82%A8-%EC%97%AC%ED%96%89%EC%A7%80-2_1655286956.jpg', title: '베트남에서 꼭 가봐야 할 도시 & 여행지 BEST 10' },
 ]);
 
+let userStore = useUserStore()
+
 </script>
 
 <template>
@@ -27,21 +31,26 @@ let latestBoard = ref([
         <h1 class="display-4 fw-bolder text-white w-100 text-center">Plan. Travel. Share.</h1>
         <p class="tab-content text-center text-white">Start your next adventure here: plan your trip, book experiences, and share your journey with a community of travelers.</p>
 
-        <div class="input-group">
+        <div v-if="userStore.isLogin" class="input-group">
           <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
           <button type="button" class="btn btn-primary">search</button>
+        </div>
+
+        <div class="w-100" v-if="!userStore.isLogin">
+          <button class="btn btn-warning me-2">로그인</button>
+          <button class="btn btn-light">회원가입</button>
         </div>
       </div>
     </div>
 
-    <hr class="m-5"/>
-    <h3 class="ms-5 mb-3">Latest Review</h3>
-    <div class="d-flex justify-content-center justify-content-between flex-wrap w-100 px-lg-5">
+    <hr class="m-5" v-if="userStore.isLogin"/>
+    <h3 class="ms-5 mb-3" v-if="userStore.isLogin">Latest Review</h3>
+    <div class="d-flex justify-content-center justify-content-between flex-wrap w-100 px-lg-5" v-if="userStore.isLogin">
       <MainCard v-for="(item, index) in latestBoard" :key="index" :board="item"/>
     </div>
-    <hr class="m-5"/>
-    <h3 class="ms-5 mb-3">Best Review</h3>
-    <div class="d-flex justify-content-center justify-content-between flex-wrap w-100 px-lg-5">
+    <hr class="m-5" v-if="userStore.isLogin"/>
+    <h3 class="ms-5 mb-3" v-if="userStore.isLogin">Best Review</h3>
+    <div class="d-flex justify-content-center justify-content-between flex-wrap w-100 px-lg-5" v-if="userStore.isLogin">
       <MainCard v-for="(item, index) in bestBoard" :key="index" :board="item"/>
 
     </div>
