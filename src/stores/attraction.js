@@ -77,10 +77,21 @@ export const useAttractionStore = defineStore('attractionStore', () => {
     }
   };
 
+  let changeAttractionOrder = async (from, to) => {
+    try {
+      await axios.put(`${baseUrl}${pathUrI}/attractions/${from}/${to}`)
+      findAttraction();
+    } catch (e) {
+      if (e.response.data.message)
+        alert(e.response.data.message);
+      console.log(e);
+    }
+  }
+
   return {
     attractionList, festivalList, accommodationList,
     festivalPageInfo, accommodationPageInfo,
-    findAttraction, findFestivalList, findAccommodationList, addAttraction, deleteAttraction
+    findAttraction, findFestivalList, findAccommodationList, addAttraction, deleteAttraction, changeAttractionOrder,
   }
 });
 
