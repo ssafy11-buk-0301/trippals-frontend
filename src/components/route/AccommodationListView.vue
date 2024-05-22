@@ -6,7 +6,6 @@ import { useAttractionStore } from '@/stores/attraction.js'
 
 let attractionStore = useAttractionStore()
 
-let { accommodationList } = defineProps({ accommodationList: Object })
 let emits = defineEmits(["moveMarker"])
 
 const moveMarker = (obj) => {
@@ -21,7 +20,7 @@ let move = (event) => {
 </script>
 
 <template>
-  <AccommodationCard v-for="(accommodation, index) in accommodationList" :key="index" :accommodation="accommodation" @click="moveMarker(accommodation)"/>
+  <AccommodationCard v-for="(accommodation, index) in attractionStore.accommodationList" :key="index" :accommodation="accommodation" @click="moveMarker(accommodation)"/>
 
   <Paginator :rows="5" :totalRecords="attractionStore.accommodationPageInfo.totalContents" @page="move"></Paginator>
 </template>

@@ -8,17 +8,17 @@ import { useAttractionStore } from '@/stores/attraction.js'
 import SearchedAttractionListView from '@/components/route/SearchedAttractionListView.vue'
 import { useBoardStore } from '@/stores/board.js'
 import Sidebar from 'primevue/sidebar'
-import router from '@/router/index.js'
-import BoardCard from '@/components/board/BoardCard.vue'
 import ReviewListView from '@/components/route/ReviewListView.vue'
+import { useAttractionSearchStore } from '@/stores/attractionSearch.js'
 
 let attractionStore = useAttractionStore();
+let attractionSearchStore = useAttractionSearchStore();
 
 attractionStore.findAttraction();
 attractionStore.findFestivalList();
 attractionStore.findAccommodationList();
 
-let boardStore = useBoardStore()
+attractionSearchStore.getSidocodeList();
 
 const boardVisible = ref(false);
 
@@ -35,10 +35,10 @@ let activatedNav = ref(0);
 
 const setNav = (num) => {
   activatedNav.value = num;
-  if (num == 2) {
+  if (num === 2) {
     attractionStore.festivalPageInfo.page = 0;
     attractionStore.findFestivalList();
-  } else if (num == 3) {
+  } else if (num === 3) {
     attractionStore.accommodationPageInfo.page = 0;
     attractionStore.findAccommodationList();
   }
@@ -56,15 +56,23 @@ const moveMarker = (lat, lng) => {
     <h3 class="display-6 fw-bold mb-3 mt-3">Route</h3>
 
     <div class="container row mb-3 d-flex justify-content-around">
-      <select class="me-2 col-2 flex-fill" id="sidocode" onchange="generateGugunCode()" required>
-        <option value="" disabled selected>시도 선택</option>
+      <select class="me-2 col-2 flex-fill" id="sidocode" @change="attractionSearchStore.getGuguncodeList();" v-model="attractionSearchStore.sidocode">
+        <option value="" selected>시도 선택</option>
+        <option v-for="(sido, index) in attractionSearchStore.sidocodeList" :key="index" :value="sido.sidoCode">
+          {{ sido.sidoName }}
+        </option>
       </select>
-      <select class="me-2 col-2 flex-fill" id="guguncode" required>
-        <option value="" disabled selected>구군 선택</option>
+      <select class="me-2 col-2 flex-fill" id="guguncode" v-model="attractionSearchStore.guguncode">
+        <option value="" selected>구군 선택</option>
+        <option v-for="(gugun, index) in attractionSearchStore.guguncodeList" :key="index" :value="gugun.gugunCode">
+          {{ gugun.gugunName }}
+        </option>
       </select>
-      <input class="me-2 col-5" type="text" id="searchKeyword" placeholder="검색어를 입력하세요." />
+      <input class="me-2 col-5" type="text" id="searchKeyword" placeholder="검색어를 입력하세요." v-model="attractionSearchStore.keyword" />
 
-      <button class="btn btn-warning rounded-5 fw-bolder col-2" onclick="searchAttraction()">검색</button>
+      <button class="btn btn-warning rounded-5 fw-bolder col-2"
+              @click="attractionSearchStore.attractionPageInfo.page=0;attractionSearchStore.searchAttraction()">
+        검색</button>
     </div>
 
     <KakaoMap :lat="coordinate.lat" :lng="coordinate.lng" :draggable="true" class="w-100 rounded-5 border mb-3">
@@ -86,14 +94,14 @@ const moveMarker = (lat, lng) => {
       </li>
     </ul>
 
-    <Sidebar v-model:visible="visible" header="Bottom Sidebar" position="bottom" style="height: 70%; background-color: #F5F5E8;">
+    <Sidebar v-model:visible="boardVisible" header="Bottom Sidebar" position="bottom" style="height: 70%; background-color: #F5F5E8;">
       <ReviewListView />
     </Sidebar>
 
-    <SearchedAttractionListView v-if="activatedNav === 0" :attractionList="attractionList" @moveMarker="moveMarker" @showReview="showReview" />
-    <AttractionListView v-if="activatedNav === 1" :attractionList="attractionStore.attractionList" @moveMarker="moveMarker" @showReview="showReview"/>
-    <FestivalListView v-else-if="activatedNav === 2" :festivalList="attractionStore.festivalList" @moveMarker="moveMarker" />
-    <AccommodationListView v-else-if="activatedNav === 3" :accommodationList="attractionStore.accommodationList" @moveMarker="moveMarker" />
+    <SearchedAttractionListView v-if="activatedNav === 0" @moveMarker="moveMarker" @showReview="showReview" />
+    <AttractionListView v-if="activatedNav === 1" @moveMarker="moveMarker" @showReview="showReview"/>
+    <FestivalListView v-else-if="activatedNav === 2" @moveMarker="moveMarker" />
+    <AccommodationListView v-else-if="activatedNav === 3" @moveMarker="moveMarker" />
   </div>
 </template>
 
