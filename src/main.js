@@ -23,6 +23,10 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import axios from 'axios'
 
 axios.defaults.withCredentials = true;
+
+import BadgeDirective from 'primevue/badgedirective';
+
+app.directive('badge', BadgeDirective);
 app.use(createPinia())
 app.use(router)
 app.component('QuillEditor', QuillEditor)
