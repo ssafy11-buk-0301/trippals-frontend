@@ -1,4 +1,6 @@
 <script setup>
+import { useAttractionStore } from '@/stores/attraction.js'
+
 const { attraction } = defineProps({ attraction: Object})
 
 let emits = defineEmits(["moveMarker", "showReview"])
@@ -25,8 +27,7 @@ const showReview = (obj) => {
       <h2 class="bi bi-three-dots" data-bs-toggle="dropdown" aria-expanded="false"></h2>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" @click="showReview">Review</a></li>
-        <li><a class="dropdown-item">Edit</a></li>
-        <li><a class="dropdown-item">Delete</a></li>
+        <li><a class="dropdown-item" @click="useAttractionStore().deleteAttraction(attraction.contentId)">Delete</a></li>
       </ul>
     </div>
   </div>

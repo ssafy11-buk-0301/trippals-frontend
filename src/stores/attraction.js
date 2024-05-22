@@ -18,10 +18,34 @@ export const useAttractionStore = defineStore('attractionStore', () => {
     try {
       let response = await axios.get(`${baseUrl}${pathUrI}/attractions`)
       attractionList.value = response.data;
+      findFestivalList();
+      findAccommodationList();
     } catch (e) {
       console.log(e);
     }
   };
+
+  let addAttraction = async (contentId) => {
+    try {
+      await axios.post(`${baseUrl}${pathUrI}/attractions/${contentId}`);
+      findAttraction();
+    } catch (e) {
+      if (e.response.data.message)
+        alert(e.response.data.message);
+      console.log(e);
+    }
+  }
+
+  let deleteAttraction = async (contentId) => {
+    try {
+      await axios.delete(`${baseUrl}${pathUrI}/attractions/${contentId}`);
+      findAttraction();
+    } catch (e) {
+      if (e.response.data.message)
+        alert(e.response.data.message);
+      console.log(e);
+    }
+  }
 
   let findFestivalList = async () => {
     try {
@@ -47,6 +71,8 @@ export const useAttractionStore = defineStore('attractionStore', () => {
       accommodationPageInfo.value.page = pageData.page;
       accommodationPageInfo.value.totalContents = pageData.totalContents;
     } catch (e) {
+      if (e.response.data.message)
+        alert(e.response.data.message);
       console.log(e);
     }
   };
@@ -54,7 +80,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
   return {
     attractionList, festivalList, accommodationList,
     festivalPageInfo, accommodationPageInfo,
-    findAttraction, findFestivalList, findAccommodationList
+    findAttraction, findFestivalList, findAccommodationList, addAttraction, deleteAttraction
   }
 });
 
