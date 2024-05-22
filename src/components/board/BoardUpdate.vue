@@ -90,7 +90,7 @@ const closeAfterDone = () => {
 
   <div class="d-flex w-100 mt-1">
     <button class="btn btn-warning fw-bold ms-auto me-1" @click="boardUpdate(true)">임시저장</button>
-    <button class="btn btn-warning fw-bold" @click="boardUpdate(false)">글수정</button>
+    <button class="btn btn-warning fw-bold me-1" @click="boardUpdate(false)">글수정</button>
     <button class="btn btn-warning fw-bold" @click="showRouteListModal">경로수정</button>
   </div>
   <!-- v-on:call-parent-insert="closeAfterInsert" -->
