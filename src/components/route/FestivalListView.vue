@@ -20,8 +20,8 @@ let move = (event) => {
 </script>
 
 <template>
-  <FestivalCard v-for="(festival, index) in attractionStore.festivalList" :key="index" :festival="festival" @click="moveMarker(festival)"/>
   <Paginator :rows="5" :totalRecords="attractionStore.festivalPageInfo.totalContents" @page="move"></Paginator>
+  <FestivalCard v-for="(festival, index) in attractionStore.festivalList" :key="index" :festival="festival" @click="moveMarker(festival)"/>
 </template>
 
 <style scoped>

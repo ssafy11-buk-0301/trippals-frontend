@@ -7,8 +7,6 @@ import { useMapStore } from '@/stores/map.js'
 
 let attractionStore = useAttractionStore()
 
-let emits = defineEmits(["moveMarker"])
-
 let mapStore = useMapStore()
 
 const moveMarker = (obj) => {
@@ -23,9 +21,8 @@ let move = (event) => {
 </script>
 
 <template>
-  <AccommodationCard v-for="(accommodation, index) in attractionStore.accommodationList" :key="index" :accommodation="accommodation" @click="moveMarker(accommodation)"/>
-
   <Paginator :rows="5" :totalRecords="attractionStore.accommodationPageInfo.totalContents" @page="move"></Paginator>
+  <AccommodationCard v-for="(accommodation, index) in attractionStore.accommodationList" :key="index" :accommodation="accommodation" @click="moveMarker(accommodation)"/>
 </template>
 
 <style scoped>
