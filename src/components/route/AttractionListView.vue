@@ -18,7 +18,7 @@ const onDrop = (dropResult) => {
 
 <template>
   <Container @drop="onDrop">
-    <Draggable  v-for="(attraction, index) in attractionStore.attractionList" :key="index">
+    <Draggable v-for="(attraction, index) in attractionStore.attractionList" :key="index">
       <AttractionCard :attraction="attraction" @showReview="showReview" />
     </Draggable>
   </Container>

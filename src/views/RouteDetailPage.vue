@@ -1,17 +1,16 @@
 <script setup>
-import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
 import { ref } from 'vue'
 import AttractionListView from '@/components/route/AttractionListView.vue'
 import FestivalListView from '@/components/route/FestivalListView.vue'
 import AccommodationListView from '@/components/route/AccommodationListView.vue'
 import { useAttractionStore } from '@/stores/attraction.js'
 import SearchedAttractionListView from '@/components/route/SearchedAttractionListView.vue'
-import { useBoardStore } from '@/stores/board.js'
 import Sidebar from 'primevue/sidebar'
 import ReviewListView from '@/components/route/ReviewListView.vue'
 import { useAttractionSearchStore } from '@/stores/attractionSearch.js'
 import MapView from '@/components/route/MapView.vue'
 import { useMapStore } from '@/stores/map.js'
+import EditorManager from '@/components/editor/EditorManager.vue'
 
 let attractionStore = useAttractionStore();
 let attractionSearchStore = useAttractionSearchStore();
@@ -56,9 +55,11 @@ const setNav = (num) => {
 </script>
 
 <template>
-  <div class="container">
-    <h3 class="display-6 fw-bold mb-3 mt-3">Route</h3>
-
+  <div class="container w-100">
+    <div>
+    <EditorManager class="p-0 mt-3" />
+    <h3 class="display-6 fw-bold text-center w-100 my-3">Route</h3>
+    </div>
     <div class="container row mb-3 d-flex justify-content-around">
       <select class="me-2 col-2 flex-fill" id="sidocode" @change="attractionSearchStore.getGuguncodeList();" v-model="attractionSearchStore.sidocode">
         <option value="" selected>시도 선택</option>
