@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { data as attractionStore } from '@/stores/data.js'
 
 export let useMapStore = defineStore('mapStore', () => {
 

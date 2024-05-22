@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import OverlayPanel from 'primevue/overlaypanel'
 import AutoComplete from 'primevue/autocomplete'
-import Button from 'primevue/button'
 import { useEditorStore } from '@/stores/editor.js'
 
 let editorStore = useEditorStore();
@@ -12,9 +11,11 @@ const toggle = (event) => {
   editorStore.findEditorList();
 }
 
-let requestEditor = (test) => {
-  alert(editorStore.keyword);
-  console.log(test);
+let requestEditor = (email) => {
+  if (confirm(`${email.value} 님을 편집자로 추가하시겠습니까?`)) {
+    editorStore.inviteUser(email.value);
+    op.value.toggle()
+  }
 }
 
 </script>

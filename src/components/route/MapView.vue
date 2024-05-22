@@ -12,7 +12,6 @@ let mapStore = useMapStore()
       :showMarkerOrder="true"
       strokeColor='#C74C5E'
       :strokeOpacity="1"
-      :strokeStyle="shortdot"
     />
     <KakaoMapMarker
       v-for="(marker, index) in mapStore.searchMarkerList"

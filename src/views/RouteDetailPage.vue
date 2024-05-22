@@ -14,7 +14,6 @@ import EditorManager from '@/components/editor/EditorManager.vue'
 
 let attractionStore = useAttractionStore();
 let attractionSearchStore = useAttractionSearchStore();
-let mapStore = useMapStore();
 
 attractionStore.findAttraction();
 

@@ -33,5 +33,19 @@ export let useEditorStore = defineStore('editorStore', () => {
     }
   }
 
-  return { editorList, findEditorList, keyword, searchUserList, searchUser }
+  let inviteUser = async (editor) => {
+    try {
+      const formData = new FormData();
+      formData.append("editor", editor);
+      let response = await axios.post(`${baseUrl}${pathUrI}/editors`, formData);
+      let tmp = [];
+      response.data.forEach((e) => { tmp.push(e.email) });
+      searchUserList.value = tmp;
+      console.log(searchUserList.value);
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  }
+
+  return { editorList, findEditorList, keyword, searchUserList, searchUser, inviteUser }
 });
