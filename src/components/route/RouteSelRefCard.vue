@@ -4,10 +4,10 @@ import router from '@/router/index.js'
 import { useRouteStore } from '@/stores/route';
 const routeStore=useRouteStore()
 
-// let date = computed(() => {
-//   let dt = routeStore.sel_route.startDate;
-//   return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
-// })
+let date = computed(() => {
+  let dt = routeStore.sel_route.startDate;
+  return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
+})
 // watch(() => routeStore.sel_route, (newVal) => {
 //   console.log('sel_route changed:', newVal.value)
 // }, { deep: true })

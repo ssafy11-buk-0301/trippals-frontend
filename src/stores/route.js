@@ -8,7 +8,7 @@ export const useRouteStore = defineStore("routeStore", () => {
   let routeList = ref([]);
   let route = ref({})
   const sel_route=ref({
-    title: 'sel',
+    name: 'sel',
     startDate: 'yy-mm-dd',
     thumbnail: '',
     overview: '',

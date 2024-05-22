@@ -12,6 +12,11 @@ const insertBoardPage = () => {
     path: '/boards/insert'
   })
 }
+const bookmarkPage = () => {
+  router.push({
+    path: '/boards/bookmark'
+  })
+}
 let newest = ref(true)
 
 let setNewest = (value) => {
@@ -38,6 +43,7 @@ const movePage = (pageIndex) => {
   setBoardMovePage(pageIndex)
   listBoard()
 }
+
 // onMounted(()=>{
 //   let searchWord=document.querySelector('#searchWord').value
 // })
@@ -63,7 +69,8 @@ const movePage = (pageIndex) => {
       <button @click="listBySearch()" class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
     </div>
     <div class="d-flex w-100">
-      <button class="btn btn-warning fw-bold ms-auto" @click="insertBoardPage">글쓰기</button>
+      <button class="btn btn-warning fw-bold ms-auto me-1" @click="insertBoardPage">글쓰기</button>
+      <button class="btn btn-warning fw-bold" @click="bookmarkPage">즐겨찾기 목록</button>
     </div>
     <ul class="nav nav-tabs justify-content-center" id="boardNav">
       <li class="nav-item">

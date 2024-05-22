@@ -9,13 +9,14 @@ export const useBoardStore = defineStore('boardStore', () => {
   const board = ref({
     thumbnail:
       'https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg',
-    boardId: 1,
+    seq: 1,
     title: 'Board1',
     content:
       '<p>여행이란 각자가 살아온 환경과 문화와 생활에서 탈출하여 새로운 경험에 도전하는 것이다. 각자 살던 곳은 그 문화가 좋은 것 이든지 혹은 그렇지 않은 것 이든지 관계없이 모든 것이 나에게 맞춰져 있고 불편한 것도 살면서 내가 적응이 되어서 불편함이 없이 살아왔다. 그러나 여행지에 나오면 언어와 관습의 차이는 물론 음식 문화의 차이 등이 생소 함으로 인해 불편함을 느낄 수가 있는데 사실은 그 불편함은 내가 일상적으로 경험하지 못한 상황을 겪어보는 것이  여행이라고 보아도 과언이 아니다.</p>',
     readCount: 3,
     regDt: new Date('2024-05-01'),
-    writer: 'fosong'
+    writer: 'fosong',
+    checkBookmark: ''
   })
   let date = computed(() => {
     return board.value.regDt.getFullYear() + '-' + (board.value.regDt.getMonth() + 1) + '-' + board.value.regDt.getDate()
@@ -49,6 +50,7 @@ export const useBoardStore = defineStore('boardStore', () => {
   })
   
   const boardList = ref([])
+  const bookmarkList = ref([])
   // pagination
   const pageCount = computed(() => Math.ceil(boardStore.totalListItemCount / boardStore.listRowCount))
   const startPageIndex = computed(() => {
@@ -87,6 +89,36 @@ export const useBoardStore = defineStore('boardStore', () => {
     console.log('listBySearch')
     await listBoard()
   }
+  const listBookmarkAfterInsert=()=>{
+    setBoardMovePage(1)
+    listBookmark()
+  }
+  const listBookmark = async ()=>{
+    let params = {
+      limit: boardStore.limit,
+      offset: boardStore.offset
+    }
+    console.log(params)
+    try {
+      let response = await axios.get('users/bookmarks',{params})
+      // console.log(response)
+      let { data } = response
+
+      console.log(data)
+      data.list.forEach((e)=>{
+        e.thumbnailUrl = `${baseUrl}/images/noThumbnail.png`;
+        if(e.thumbnail)e.thumbnailUrl = `${baseUrl}/images/${e.thumbnail}`;
+        // e.thumbnail=''
+        e.regDt=new Date(e.regDt)
+      })
+      // console.log(data)
+      bookmarkList.value = data.list
+      setTotalListItemCount(data.count)
+
+    } catch (error) {
+      alert(error.reponse.data.message)
+    }
+  }
   const listBoard = async () => {
     // 목록
     
@@ -102,8 +134,11 @@ export const useBoardStore = defineStore('boardStore', () => {
       let response = await axios.get('/boards',{params})
       // console.log(response)
       let { data } = response
+      console.log(data.list)
       data.list.forEach((e)=>{
-        e.thumbnail='https://media.cntraveler.com/photos/5edfc029b16364ea435ca862/master/pass/Roadtrip-2020-GettyImages-1151192650.jpg'
+        e.thumbnailUrl = `${baseUrl}/images/noThumbnail.png`;
+        if(e.thumbnail)e.thumbnailUrl = `${baseUrl}/images/${e.thumbnail}`;
+        // e.thumbnail=''
         e.regDt=new Date(e.regDt)
       })
       // console.log(data)
@@ -127,6 +162,23 @@ export const useBoardStore = defineStore('boardStore', () => {
   //       console.log(error)
   //     })
   // }
+  const deleteBookmark= async () => {
+    let url = '/boards/' + board.value.seq+'/bookmark'
+
+    // fetch + rest api
+    // /boards DELETE
+    // if (confirm('이 글을 삭제하시겠습니까?')) {
+    axios
+      .delete(url)
+      .then(() => {
+          //성공적으로 삭제했는지 체크해서 board.checkBookmark에 전달
+          detailBoard(board.value.seq)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    // }
+  }
   const deleteBoard = async () => {
     let url = '/boards/' + board.value.seq
 
@@ -167,9 +219,10 @@ export const useBoardStore = defineStore('boardStore', () => {
       data.dto.regDt=new Date(data.dto.regDt)
       data.dto.thumbnailUrl = `${baseUrl}/images/${data.dto.thumbnail}`;
       board.value=data.dto
-  
-      routerStore.sel_route.title=data.dto.routeName
-      routerStore.sel_route.startDate=new Date(data.dto.startDate)
+      board.value.checkBookmark=data.checkBookmark
+
+      routerStore.sel_route.name=data.dto.routeName
+      routerStore.sel_route.startDate=data.dto.startDate
       routerStore.sel_route.overview=data.dto.overview
       routerStore.sel_route.thumbnail=data.dto.thumbnail
       routerStore.sel_route.thumbnailUrl=data.dto.thumbnailUrl
@@ -192,14 +245,14 @@ export const useBoardStore = defineStore('boardStore', () => {
   return {
     boardStore,date,
     detailBoard,
-    listBoard,listBySearch,
+    listBoard,listBySearch,listBookmark,listBookmarkAfterInsert,deleteBookmark,
     // insertBoard,
     updateBoard,
     deleteBoard,
     findBoardByRouteId,
     clear,
     board,
-    boardList,
+    boardList,bookmarkList,
     pageCount,
     startPageIndex,
     endPageIndex,

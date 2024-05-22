@@ -11,7 +11,7 @@
 
 <template>
   <div class="card my-4 d-flex flex-row align-items-center row">
-    <div id="thumbnail" class="rounded-1 h-100 col-1" :style="{ backgroundImage: `url(${board.thumbnail})` }"></div>
+    <div id="thumbnail" class="rounded-1 h-100 col-1" :style="{ backgroundImage: `url(${board.thumbnailUrl})` }"></div>
     <div class="fs-4 fw-bold col-6 text-center">{{ board.title  }}</div>
     <div class="fs-5 col-2 text-center">{{ board.writer }}</div>
     <div class="fs-6 col-1 text-center">{{ board.readCount }}</div>
