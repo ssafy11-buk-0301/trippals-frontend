@@ -5,11 +5,13 @@ import { onMounted } from 'vue'
 import BoardDetail from '@/components/board/BoardDetail.vue'
 import BoardButtons from '@/components/board/BoardButtons.vue'
 const store = useBoardStore()
-const route = useRoute()
-onMounted(() => {
-  store.detailBoard(route.params.boardId)
-  console.log(store.board.boardId)
-})
+// const route = useRoute()
+// const boardId=route.params.boardId
+// onMounted(async () => {
+//   await store.detailBoard(route.params.boardId)
+//   console.log('detailPage')
+//   console.log(store.board.value)
+// })
 </script>
 
 <template>

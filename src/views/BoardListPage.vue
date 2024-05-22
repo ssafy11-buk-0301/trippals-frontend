@@ -1,7 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BoardListView from '@/components/board/BoardListView.vue'
+import PaginationUI from '@/components/board/PaginationUI.vue'
+import { useBoardStore } from '@/stores/board'
+const { boardStore, listBySearch,listBoard, setBoardMovePage } = useBoardStore()
+
 const router = useRouter()
 const insertBoardPage = () => {
   router.push({
@@ -11,6 +15,9 @@ const insertBoardPage = () => {
 let newest = ref(true)
 
 let setNewest = (value) => {
+  if(!value) boardStore.orderBy='read_count'
+  else boardStore.orderBy='reg_dt'
+  listBoard()
   newest.value = value
 }
 
@@ -26,6 +33,15 @@ let board = {
   writer: 'fosong'
 }
 let boardList = ref([board, board, board, board, board])
+const movePage = (pageIndex) => {
+  console.log('BoardMainVue : movePage : pageIndex : ' + pageIndex)
+  setBoardMovePage(pageIndex)
+  listBoard()
+}
+// onMounted(()=>{
+//   let searchWord=document.querySelector('#searchWord').value
+// })
+
 </script>
 
 <template>
@@ -38,11 +54,13 @@ let boardList = ref([board, board, board, board, board])
       <input
         type="text"
         class="form-control searchForm"
-        id="searchKeyword"
+        id="searchWord"
         aria-describedby="inputGroupFileAddon04"
         aria-label="Upload"
+        v-model="boardStore.searchWord"
       />
-      <button class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
+      <!--  -->
+      <button @click="listBySearch()" class="btn btn-warning fw-bold" type="button" id="searchButton">Search</button>
     </div>
     <div class="d-flex w-100">
       <button class="btn btn-warning fw-bold ms-auto" @click="insertBoardPage">글쓰기</button>
@@ -59,25 +77,9 @@ let boardList = ref([board, board, board, board, board])
         </button>
       </li>
     </ul>
-    <BoardListView :boardList="boardList" />
+    <BoardListView />
 
-    <nav class="ms-auto w-100 my-5 pt-5">
-      <ul class="pagination">
-        <li class="page-item ms-auto">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link active" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item me-auto">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <PaginationUI v-on:call-parent="movePage"/>
   </div>
 </template>
 
