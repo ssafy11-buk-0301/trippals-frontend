@@ -5,6 +5,7 @@ import { ref } from 'vue'
 import { useAttractionStore } from '@/stores/attraction.js'
 import { useEditorStore } from '@/stores/editor.js'
 import { useUserStore } from '@/stores/user.js'
+import { useRouteStore } from '@/stores/route.js'
 
 let baseUrl = 'http://localhost:8080';
 
@@ -33,6 +34,9 @@ export const useWebSocketStore = defineStore('websocket', () => {
           attractionStore.findAttraction();
         } else if (eventType === '"ADD_EDITOR"') {
           editorStore.findEditorList()
+        } else {
+          console.log(`AI MESSAGE: ${eventType}`)
+          useRouteStore().aiMessage = eventType;
         }
       })
     })
