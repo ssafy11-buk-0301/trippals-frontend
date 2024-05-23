@@ -15,6 +15,28 @@ export const useAttractionStore = defineStore('attractionStore', () => {
   let accommodationList = ref([]);
   let accommodationPageInfo = ref({page: 0});
 
+  let reviewList = ref([]);
+  let reviewPageInfo = ref({page: 0});
+  let reviewVisible = ref(false);
+
+  let findReview = async (contentId) => {
+    try {
+      let response = await axios.get(`${baseUrl}/attractions/${contentId}/boards`,
+        {params: getPageParams(5, reviewPageInfo.value.page)})
+      let { contents, ...pageData} = response.data;
+      contents.forEach(item => {
+        item.thumbnailUrl = `${baseUrl}/images/noThumbnail.png`;
+        if(item.thumbnail)item.thumbnailUrl = `${baseUrl}/images/${item.thumbnail}`;
+        item.regDt = new Date(item.regDt)
+      })
+      reviewList.value = contents;
+      reviewPageInfo.value.page = pageData.page;
+      reviewPageInfo.value.totalContents = pageData.totalContents;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   let findAttraction = async () => {
     try {
       let response = await axios.get(`${baseUrl}${pathUrI}/attractions`)
@@ -93,10 +115,16 @@ export const useAttractionStore = defineStore('attractionStore', () => {
     }
   }
 
+  const showReview = (contentId) => {
+    findReview(contentId);
+    reviewVisible.value = true;
+  }
+
   return {
     attractionList, festivalList, accommodationList,
     festivalPageInfo, accommodationPageInfo,
     findAttraction, findFestivalList, findAccommodationList, addAttraction, deleteAttraction, changeAttractionOrder,
+    reviewList, reviewPageInfo, findReview, showReview, reviewVisible
   }
 });
 

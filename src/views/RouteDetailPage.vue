@@ -20,7 +20,7 @@ attractionSearchStore.getSidocodeList();
 
 const boardVisible = ref(false);
 
-const showReview = (attraction) => {
+const showReview = () => {
   boardVisible.value = true;
 }
 
@@ -95,8 +95,8 @@ const setNav = (num) => {
       </li>
     </ul>
 
-    <Sidebar v-model:visible="boardVisible" header="Bottom Sidebar" position="bottom" style="height: 70%; background-color: #F5F5E8;">
-      <ReviewListView />
+    <Sidebar v-model:visible="attractionStore.reviewVisible" header="Bottom Sidebar" position="bottom" style="height: 70%; background-color: #F5F5E8;">
+      <ReviewListView :style="{height: '100px'}"/>
     </Sidebar>
 
     <SearchedAttractionListView v-if="activatedNav === 0" @showReview="showReview" />

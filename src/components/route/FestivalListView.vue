@@ -4,8 +4,6 @@ import Paginator from 'primevue/paginator'
 import { useAttractionStore } from '@/stores/attraction.js'
 import { useMapStore } from '@/stores/map.js'
 
-let emits = defineEmits(["moveMarker"])
-
 let attractionStore = useAttractionStore();
 let mapStore = useMapStore()
 

@@ -4,12 +4,6 @@ import Paginator from 'primevue/paginator'
 import { useAttractionSearchStore } from '@/stores/attractionSearch.js'
 let attractionStore = useAttractionSearchStore()
 
-let emits = defineEmits(["showReview"])
-
-const showReview = (obj) => {
-  emits("showReview", obj)
-}
-
 let move = (event) => {
   attractionStore.attractionPageInfo.page = event.page;
   attractionStore.searchAttraction();
@@ -18,7 +12,7 @@ let move = (event) => {
 
 <template>
   <Paginator :rows="5" :totalRecords="attractionStore.attractionPageInfo.totalContents" @page="move"></Paginator>
-  <SearchedAttractionCard v-for="(attraction, index) in attractionStore.attractionList" :key="index" :attraction="attraction" @showReview="showReview" />
+  <SearchedAttractionCard v-for="(attraction, index) in attractionStore.attractionList" :key="index" :attraction="attraction" />
 </template>
 
 <style scoped>

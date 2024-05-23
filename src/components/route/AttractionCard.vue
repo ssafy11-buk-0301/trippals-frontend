@@ -9,10 +9,6 @@ let mapStore = useMapStore()
 const moveMarker = () => {
   mapStore.moveMarker(attraction.latitude, attraction.longitude)
 }
-
-const showReview = (obj) => {
-  emits("showReview", obj)
-}
 </script>
 
 <template>
@@ -27,7 +23,7 @@ const showReview = (obj) => {
     <div class="dropdown-center ms-auto me-5 col-1">
       <h2 class="bi bi-three-dots" data-bs-toggle="dropdown" aria-expanded="false"></h2>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" @click="showReview">Review</a></li>
+        <li><a class="dropdown-item" @click="useAttractionStore().showReview(attraction.contentId)">Review</a></li>
         <li><a class="dropdown-item" @click="useAttractionStore().deleteAttraction(attraction.contentId)">Delete</a></li>
       </ul>
     </div>
