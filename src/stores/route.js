@@ -4,6 +4,8 @@ import axios from 'axios'
 
 let baseUrl = "http://localhost:8080";
 export const useRouteStore = defineStore("routeStore", () => {
+  let aiMessage = ref("")
+
   let routeList = ref([]);
   let route = ref({})
   const sel_route=ref({
@@ -121,6 +123,7 @@ export const useRouteStore = defineStore("routeStore", () => {
     update,
     remove,
     sel_route,
-    setRouteRefValue
+    setRouteRefValue,
+    aiMessage
   }
 })

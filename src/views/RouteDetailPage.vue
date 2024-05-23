@@ -11,6 +11,8 @@ import { useAttractionSearchStore } from '@/stores/attractionSearch.js'
 import MapView from '@/components/route/MapView.vue'
 import EditorManager from '@/components/editor/EditorManager.vue'
 import { useWebSocketStore } from '@/stores/websocket.js'
+import { useRouteStore } from '../stores/route.js'
+import Card from 'primevue/card'
 
 let attractionStore = useAttractionStore();
 let attractionSearchStore = useAttractionSearchStore();
@@ -112,6 +114,11 @@ const setNav = (num) => {
     <AttractionListView v-if="activatedNav === 1" @showReview="showReview"/>
     <FestivalListView v-else-if="activatedNav === 2" />
     <AccommodationListView v-else-if="activatedNav === 3" />
+  </div>
+
+  <div class="card p-3" :style="{ position: 'fixed', height: '400px', width: '300px', bottom: '150px', right: '20px' }">
+    <h3 class="w-100 text-center my-4 fw-bold">GPT TIP</h3>
+    {{ useRouteStore().aiMessage }}
   </div>
 </template>
 
