@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import axios from 'axios'
 
-let baseUrl = "http://localhost:8080";
+let baseUrl = "http://192.168.203.126:8080";
 
 export const useSharedRouteStore = defineStore("SharedRouteStore", () => {
   let routeList = ref([]);

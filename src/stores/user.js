@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import axios from 'axios'
 
-const baseUrl = "http://localhost:8080"
+const baseUrl = "http://192.168.203.126:8080"
 
 export const useUserStore =
   defineStore('user', ()=>{
@@ -72,7 +72,7 @@ export const useUserStore =
       console.log(userEditForm);
 
       try {
-        const response = await axios.post('http://localhost:8080/users', formData, {
+        const response = await axios.post('http://192.168.203.126:8080/users', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }

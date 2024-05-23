@@ -28,7 +28,7 @@ const route=useRouteStore()
 const init=()=>{
   board.value.title="제목을 입력하세요"
   board.value.content="내용을 입력하세요"
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = "http://192.168.203.126:8080";
   route.sel_route={
     title: '여행지를 선택하세요',
     startDate: 'yyyy-mm-dd',

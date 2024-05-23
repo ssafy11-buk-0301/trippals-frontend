@@ -230,7 +230,7 @@ export const useBoardStore = defineStore('boardStore', () => {
       .then(listBoard)
       .catch((error) => console.log(error))
   }
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = "http://192.168.203.126:8080";
   const detailBoard = async (boardId) => {
     // 상세
     // get /boards/123

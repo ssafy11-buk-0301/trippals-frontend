@@ -14,5 +14,14 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    host: '0.0.0.0',
+    // 외부 IP 주소에서 접근 허용
+    port: 81,
+    strictPort: true,
+    hmr: {
+      host: '192.168.203.126', port: 81
+    }
   }
 })

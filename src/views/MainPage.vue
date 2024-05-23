@@ -51,11 +51,13 @@ const detailPage = (board) => {
           <input v-model="store.boardStore.searchWord" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
           <button @click="store.listBySearch('main')" type="button" class="btn btn-primary">search</button>
         </div>
-
-        <div class="w-100" v-if="!userStore.isLogin">
-          <RouterLink to="/login"><button class="btn btn-warning me-2">로그인</button></RouterLink>
-          <button class="btn btn-light">회원가입</button>
+        <div class="d-flex w-100 justify-content-center">
+          <div  v-if="!userStore.isLogin">
+            <RouterLink to="/login"><button class="btn btn-warning me-2">로그인</button></RouterLink>
+            <button class="btn btn-light">회원가입</button>
+          </div>
         </div>
+
       </div>
     </div>
 

@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import axios from 'axios'
 import { useAttractionStore } from '@/stores/attraction.js'
 
-let baseUrl = "http://localhost:8080";
+let baseUrl = "http://192.168.203.126:8080";
 
 export let useEditorStore = defineStore('editorStore', () => {
   let editorList = ref([]);

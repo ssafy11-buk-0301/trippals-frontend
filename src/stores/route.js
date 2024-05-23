@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 import axios from 'axios'
 
-let baseUrl = "http://localhost:8080";
+let baseUrl = "http://192.168.203.126:8080";
 export const useRouteStore = defineStore("routeStore", () => {
   let routeList = ref([]);
   let route = ref({})

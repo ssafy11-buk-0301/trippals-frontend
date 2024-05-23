@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useMapStore } from '@/stores/map.js'
 import { useRouteStore } from '@/stores/route.js'
 
-let baseUrl = "http://localhost:8080";
+let baseUrl = "http://192.168.203.126:8080";
 
 export const useAttractionStore = defineStore('attractionStore', () => {
   let routeSeq = ref(0)

@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { useMapStore } from '@/stores/map.js'
 
-let baseUrl = "http://localhost:8080";
+let baseUrl = "http://192.168.203.126:8080";
 
 export let useAttractionSearchStore = defineStore('attractionSearchStore', () => {
   let sidocodeList = ref([]);

@@ -5,9 +5,9 @@ import router from '@/router/index.js'
 
   let userStore = useUserStore();
   let signUpForm = reactive({
-    name: 'jaedoo',
-    password: '1234qwer!!',
-    email: 'jaedoo@ssafy.com'
+    name: '',
+    password: '',
+    email: ''
   });
   const invalid = reactive({
     name: false,
@@ -73,7 +73,7 @@ import router from '@/router/index.js'
         router.push('/login')
       }
     }
-    alert('입력이 잘못되었습니다.');
+
   }
 </script>
 

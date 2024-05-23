@@ -6,7 +6,7 @@ import { useAttractionStore } from '@/stores/attraction.js'
 import { useEditorStore } from '@/stores/editor.js'
 import { useUserStore } from '@/stores/user.js'
 
-let baseUrl = 'http://localhost:8080';
+let baseUrl = 'http://192.168.203.126:8080';
 
 export const useWebSocketStore = defineStore('websocket', () => {
   let routeClient = ref();

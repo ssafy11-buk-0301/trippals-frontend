@@ -5,8 +5,8 @@
 
   let userStore = useUserStore();
   let loginForm = reactive({
-    email: 'test',
-    password: 'test'
+    email: '',
+    password: ''
   })
 
   const invalid = reactive({
