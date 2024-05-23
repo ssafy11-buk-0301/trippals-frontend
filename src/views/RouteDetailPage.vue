@@ -9,7 +9,6 @@ import Sidebar from 'primevue/sidebar'
 import ReviewListView from '@/components/route/ReviewListView.vue'
 import { useAttractionSearchStore } from '@/stores/attractionSearch.js'
 import MapView from '@/components/route/MapView.vue'
-import { useMapStore } from '@/stores/map.js'
 import EditorManager from '@/components/editor/EditorManager.vue'
 
 let attractionStore = useAttractionStore();

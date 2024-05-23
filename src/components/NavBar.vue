@@ -3,8 +3,7 @@ import { useUserStore } from '@/stores/user.js'
 import { useEditorStore } from '@/stores/editor.js'
 import ScrollTop from 'primevue/scrolltop';
 import Dialog from 'primevue/dialog'
-import Card from 'primevue/card'
-import { onUpdated, ref } from 'vue'
+import { onMounted, onUpdated, ref } from 'vue'
 
 let userStore = useUserStore()
 let editorStore = useEditorStore()
@@ -14,6 +13,10 @@ console.log(userStore.isLogin);
 onUpdated(() => {
   if (userStore.isLogin)
     editorStore.findRequestList()
+});
+
+onMounted(() => {
+
 })
 
 const logout = () => {
@@ -43,11 +46,11 @@ let visible = ref(false);
 
   <ScrollTop />
 
-  <Dialog v-model:visible="visible" modal header="Edit Profile" :style="{ width: '30rem' }">
+  <Dialog v-model:visible="visible" modal header="초대 요청" :style="{ width: '30rem' }">
      <div class="card d-flex flex-row mb-3 p-2" v-for="(request, index) in editorStore.requestList" :key="index">
       <div class="my-auto ms-2"><span class="fw-bold">{{ request.routeName }}</span>에 참여하시겠습니까?</div>
-      <button class="btn btn-primary ms-auto me-1" :style="{ width: '3rem'}">O</button>
-      <button class="btn btn-danger" :style="{ width: '3rem'}">X</button>
+      <button class="btn btn-primary ms-auto me-1" :style="{ width: '3rem'}" @click="editorStore.confirmRequest(request)">O</button>
+      <button class="btn btn-danger" :style="{ width: '3rem'}" @click="editorStore.rejectRequest(request)">X</button>
     </div>
   </Dialog>
 </template>

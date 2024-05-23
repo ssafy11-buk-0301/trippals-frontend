@@ -54,11 +54,31 @@ export let useEditorStore = defineStore('editorStore', () => {
       let tmp = [];
       response.data.forEach((e) => { tmp.push(e.email) });
       searchUserList.value = tmp;
-      console.log(searchUserList.value);
+      keyword.value = "";
     } catch (e) {
       alert(e.response.data.message);
     }
   }
 
-  return { editorList, findEditorList, keyword, searchUserList, searchUser, inviteUser, requestList, requestCount, findRequestList }
+  let confirmRequest = async (request) => {
+    try {
+      if (confirm("수락하시겠습니까?"))
+        await axios.post(`${baseUrl}/routes/${request.routeSeq}/editors/confirm`);
+      await findRequestList();
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  }
+
+  let rejectRequest = async (request) => {
+    try {
+      if (confirm("거절하시겠습니까?"))
+        await axios.post(`${baseUrl}/routes/${request.routeSeq}/editors/reject`);
+      await findRequestList();
+    } catch (e) {
+      alert(e.response.data.message);
+    }
+  }
+
+  return { editorList, findEditorList, keyword, searchUserList, searchUser, inviteUser, requestList, requestCount, findRequestList, confirmRequest, rejectRequest }
 });
