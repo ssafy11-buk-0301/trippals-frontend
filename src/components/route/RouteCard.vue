@@ -1,6 +1,7 @@
 <script setup>
 import router from '@/router/index.js'
 import { useRouteStore } from '@/stores/route.js'
+import { useAttractionStore } from '@/stores/attraction.js'
 
 let { route } = defineProps({route: Object})
 console.log(route)
@@ -14,6 +15,7 @@ let getEditForm = () => {
 }
 
 let moveDetailPage = () => {
+  useAttractionStore().routeSeq = route.seq;
   router.push("/routes/" + route.seq)
 }
 

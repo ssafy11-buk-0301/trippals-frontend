@@ -1,11 +1,11 @@
 <script setup>
   import { computed } from 'vue'
 
-  const props=defineProps({ board: Object });
-  let date = computed(() => {
+const props=defineProps({ board: Object });
+let date = computed(() => {
 
-    return props.board.regDt.getFullYear()+'-'+(props.board.regDt.getMonth()+1)+'-'+props.board.regDt.getDate();
-  })
+  return props.board.regDt.getFullYear()+'-'+(props.board.regDt.getMonth()+1)+'-'+props.board.regDt.getDate();
+})
 </script>
 
 <template>
