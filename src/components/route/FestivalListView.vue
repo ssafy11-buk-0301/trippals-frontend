@@ -1,35 +1,25 @@
 <script setup>
 import FestivalCard from '@/components/route/FestivalCard.vue'
+import Paginator from 'primevue/paginator'
+import { useAttractionStore } from '@/stores/attraction.js'
+import { useMapStore } from '@/stores/map.js'
 
-let { festivalList } = defineProps({ festivalList: Object })
-
-let emits = defineEmits(["moveMarker"])
+let attractionStore = useAttractionStore();
+let mapStore = useMapStore()
 
 const moveMarker = (obj) => {
-  emits("moveMarker", obj.latitude, obj.longitude)
+  mapStore.moveMarker(obj.latitude, obj.longitude, obj.title)
 }
+
+let move = (event) => {
+  attractionStore.festivalPageInfo.page = event.page;
+  attractionStore.findFestivalList();
+};
 </script>
 
 <template>
-  <FestivalCard v-for="(festival, index) in festivalList" :key="index" :festival="festival" @click="moveMarker(festival)"/>
-
-  <nav class="ms-auto w-100 my-5">
-    <ul class="pagination">
-      <li class="page-item ms-auto">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li class="page-item"><a class="page-link active" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item me-auto">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <Paginator :rows="5" :totalRecords="attractionStore.festivalPageInfo.totalContents" @page="move"></Paginator>
+  <FestivalCard v-for="(festival, index) in attractionStore.festivalList" :key="index" :festival="festival" @click="moveMarker(festival)"/>
 </template>
 
 <style scoped>

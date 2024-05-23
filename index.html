@@ -15,4 +15,9 @@
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
+  <script>
+    if (global === undefined) {
+      var global = window;
+    }
+  </script>
 </html>

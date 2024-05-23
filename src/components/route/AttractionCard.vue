@@ -1,14 +1,13 @@
 <script setup>
+import { useAttractionStore } from '@/stores/attraction.js'
+import { useMapStore } from '@/stores/map.js'
+
 const { attraction } = defineProps({ attraction: Object})
 
-let emits = defineEmits(["moveMarker", "showReview"])
+let mapStore = useMapStore()
 
 const moveMarker = () => {
-  emits("moveMarker", attraction)
-}
-
-const showReview = (obj) => {
-  emits("showReview", obj)
+  mapStore.moveMarker(attraction.latitude, attraction.longitude)
 }
 </script>
 
@@ -24,9 +23,8 @@ const showReview = (obj) => {
     <div class="dropdown-center ms-auto me-5 col-1">
       <h2 class="bi bi-three-dots" data-bs-toggle="dropdown" aria-expanded="false"></h2>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" @click="showReview">Review</a></li>
-        <li><a class="dropdown-item">Edit</a></li>
-        <li><a class="dropdown-item">Delete</a></li>
+        <li><a class="dropdown-item" @click="useAttractionStore().showReview(attraction.contentId)">Review</a></li>
+        <li><a class="dropdown-item" @click="useAttractionStore().deleteAttraction(attraction.contentId)">Delete</a></li>
       </ul>
     </div>
   </div>

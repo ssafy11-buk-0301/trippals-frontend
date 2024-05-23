@@ -1,9 +1,11 @@
 <script setup>
 import router from '@/router/index.js'
+import { useAttractionStore } from '@/stores/attraction.js'
 
 let { route } = defineProps({route: Object})
 
 let moveDetailPage = () => {
+  useAttractionStore().routeSeq = route.seq;
   router.push("/routes/" + route.seq)
 }
 
