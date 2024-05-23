@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import axios from 'axios'
+import { useAttractionStore } from '@/stores/attraction.js'
 
 let baseUrl = "http://localhost:8080";
-let pathUrI = window.location.pathname;
 
 export let useEditorStore = defineStore('editorStore', () => {
   let editorList = ref([]);
@@ -16,7 +16,7 @@ export let useEditorStore = defineStore('editorStore', () => {
 
   let findEditorList = async () => {
     try {
-      let response = await axios.get(`${baseUrl}${pathUrI}/editors`)
+      let response = await axios.get(`${baseUrl}/routes/${useAttractionStore().routeSeq}/editors`)
       editorList.value = response.data;
       editorList.value.forEach((e) => { e.profileImage = `${baseUrl}/images/${e.profileImage}`;})
     } catch (e) {
@@ -50,7 +50,7 @@ export let useEditorStore = defineStore('editorStore', () => {
     try {
       const formData = new FormData();
       formData.append("editor", editor);
-      let response = await axios.post(`${baseUrl}${pathUrI}/editors`, formData);
+      let response = await axios.post(`${baseUrl}/routes/${useAttractionStore().routeSeq}/editors`, formData);
       let tmp = [];
       response.data.forEach((e) => { tmp.push(e.email) });
       searchUserList.value = tmp;

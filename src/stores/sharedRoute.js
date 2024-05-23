@@ -19,7 +19,8 @@ export const useSharedRouteStore = defineStore("SharedRouteStore", () => {
   const findSharedRoutes = async () => {
     try {
       let response = await axios.get(`${baseUrl}/editors/routes`, {params: pageParams.value})
-       routeList.value = contents
+      let { contents, ...pageData} = response.data;
+      routeList.value = contents
       routeList.value.forEach((item) => {
         item.thumbnailUrl = `${baseUrl}/images/${item.thumbnail}`;
       })

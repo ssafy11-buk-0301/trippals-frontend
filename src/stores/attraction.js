@@ -2,11 +2,12 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
 import { useMapStore } from '@/stores/map.js'
+import { useRouteStore } from '@/stores/route.js'
 
 let baseUrl = "http://localhost:8080";
-let pathUrI = window.location.pathname;
 
 export const useAttractionStore = defineStore('attractionStore', () => {
+  let routeSeq = ref(0)
   let attractionList = ref([]);
 
   let festivalList = ref([]);
@@ -39,7 +40,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
 
   let findAttraction = async () => {
     try {
-      let response = await axios.get(`${baseUrl}${pathUrI}/attractions`)
+      let response = await axios.get(`${baseUrl}/routes/${routeSeq.value}/attractions`)
       attractionList.value = response.data;
       useMapStore().generateMarker(attractionList.value);
     } catch (e) {
@@ -49,7 +50,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
 
   let addAttraction = async (contentId) => {
     try {
-      await axios.post(`${baseUrl}${pathUrI}/attractions/${contentId}`);
+      await axios.post(`${baseUrl}/routes/${routeSeq.value}/attractions/${contentId}`);
       await findAttraction();
     } catch (e) {
       if (e.response.data.message)
@@ -60,7 +61,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
 
   let deleteAttraction = async (contentId) => {
     try {
-      await axios.delete(`${baseUrl}${pathUrI}/attractions/${contentId}`);
+      await axios.delete(`${baseUrl}/routes/${routeSeq.value}/attractions/${contentId}`);
       await findAttraction();
     } catch (e) {
       if (e.response.data.message)
@@ -71,7 +72,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
 
   let findFestivalList = async () => {
     try {
-      let response = await axios.get(`${baseUrl}${pathUrI}/nearby-attractions`,
+      let response = await axios.get(`${baseUrl}/routes/${routeSeq.value}/nearby-attractions`,
         {params: getPageParams(5, festivalPageInfo.value.page, 15)})
       let { contents, ...pageData} = response.data;
 
@@ -87,7 +88,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
 
   let findAccommodationList = async () => {
     try {
-      let response = await axios.get(`${baseUrl}${pathUrI}/nearby-attractions`,
+      let response = await axios.get(`${baseUrl}/routes/${routeSeq.value}/nearby-attractions`,
         {params: getPageParams(5, accommodationPageInfo.value.page, 32)})
       let { contents, ...pageData} = response.data;
 
@@ -106,7 +107,7 @@ export const useAttractionStore = defineStore('attractionStore', () => {
 
   let changeAttractionOrder = async (from, to) => {
     try {
-      await axios.put(`${baseUrl}${pathUrI}/attractions/${from}/${to}`)
+      await axios.put(`${baseUrl}/routes/${routeSeq.value}/attractions/${from}/${to}`)
       await findAttraction();
     } catch (e) {
       if (e.response.data.message)
@@ -124,7 +125,8 @@ export const useAttractionStore = defineStore('attractionStore', () => {
     attractionList, festivalList, accommodationList,
     festivalPageInfo, accommodationPageInfo,
     findAttraction, findFestivalList, findAccommodationList, addAttraction, deleteAttraction, changeAttractionOrder,
-    reviewList, reviewPageInfo, findReview, showReview, reviewVisible
+    reviewList, reviewPageInfo, findReview, showReview, reviewVisible,
+    routeSeq
   }
 });
 
