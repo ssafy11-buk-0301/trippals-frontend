@@ -11,6 +11,7 @@ import BoardDetailPage from '@/views/BoardDetailPage.vue'
 import BoardInsertPage from '@/views/BoardInsertPage.vue'
 import BoardUpdatePage from '@/views/BoardUpdatePage.vue'
 import BookmarkListPage from '@/views/BookmarkListPage.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

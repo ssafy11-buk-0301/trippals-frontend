@@ -87,18 +87,20 @@ export const useBoardStore = defineStore('boardStore', () => {
   }
   //pagination end
   const listBySearch=async (purpose)=>{
-    await listBoard()
     setBoardMovePage(1)
+    await listBoard()
     if(purpose=='main') router.push({path:'/boards'})
   }
 
   const listBestBoard=async ()=>{
     boardStore.orderBy='read_count'
     boardStore.limit=4
+    boardStore.searchWord=''
     await listBoard('mainB')
   }
   const listLatestBoard= async()=>{
     boardStore.limit=4
+    boardStore.searchWord=''
     await listBoard('mainL')
   }
   const listBookmarkAfterInsert=()=>{
@@ -248,7 +250,7 @@ export const useBoardStore = defineStore('boardStore', () => {
       routerStore.sel_route.overview=data.dto.overview
       routerStore.sel_route.thumbnail=data.dto.thumbnail
       routerStore.sel_route.thumbnailUrl=data.dto.thumbnailUrl
-      routerStore.sel_route.routeId=data.dto.routeSeq
+      routerStore.sel_route.seq=data.dto.routeSeq
 
       console.log(board.value)
     } catch (error) {

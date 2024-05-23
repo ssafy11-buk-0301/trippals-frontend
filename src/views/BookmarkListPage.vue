@@ -10,12 +10,6 @@ const { boardStore, listBookmarkAfterInsert,listBookmark, setBoardMovePage } = u
 const router = useRouter()
 let newest = ref(true)
 
-let setNewest = (value) => {
-  if(!value) boardStore.orderBy='read_count'
-  else boardStore.orderBy='reg_dt'
-  listBookmarkAfterInsert()
-  newest.value = value
-}
 
 const movePage = (pageIndex) => {
   console.log('BoardMainVue : movePage : pageIndex : ' + pageIndex)

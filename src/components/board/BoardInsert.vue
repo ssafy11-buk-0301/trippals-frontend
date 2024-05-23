@@ -82,8 +82,8 @@ const boardInsert = async (isDraft) => {
   </div>
   <!-- <div><img src="/src/assets/img/place.png" alt="" /></div> -->
   <div>
-    <!-- <Editor editorStyle="height: 320px" v-model:content="boardContent" theme="snow" /> -->
-    <quill-editor v-model:content="board.content" contentType="text" theme="snow"></quill-editor>
+<!--     <Editor editorStyle="height: 320px" v-model:content="board.content" theme="snow" />-->
+    <quill-editor v-model:content="board.content" contentType="text" theme="snow" :style="{height:'320px'}"></quill-editor>
     <!-- <QuillEditor v-model="modelValue" theme="snow" /> -->
   </div>
 

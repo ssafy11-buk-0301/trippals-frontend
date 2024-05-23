@@ -74,7 +74,7 @@ const closeAfterDone = () => {
       v-model:content="board.content"
       contentType="html"
       theme="snow"
-      style="height: 320px"
+      :style="{height:'320px'}"
     ></quill-editor>
     <!-- <QuillEditor content="testContent" theme="snow" /> -->
     <!-- {{ board.content }} -->

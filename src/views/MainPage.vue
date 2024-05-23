@@ -4,6 +4,7 @@ import {useBoardStore} from "@/stores/board.js";
 import MainCard from '@/components/MainCard.vue'
 import { useRouteStore } from '@/stores/route.js'
 import { useUserStore } from '@/stores/user.js'
+import { useRouter } from 'vue-router'
 
 let bestBoard = ref([
   {thumbnail: 'https://wimg.mk.co.kr/meet/neds/2020/05/image_readtop_2020_506007_15897737584203733.jpg', title: '`포스트 코로나 워너비 여행지`, 전세계 1위로 꼽힌 나라가?' },
@@ -25,6 +26,16 @@ async function  setList(){
   await store.listLatestBoard();
   store.boardStore.limit=10
 }
+setList()
+
+const router = useRouter()
+// store.listBoard()
+const detailPage = (board) => {
+  store.detailBoard(board.seq)
+  router.push({
+    path: `/boards/${board.seq}`
+  })
+}
 </script>
 
 <template>
@@ -37,12 +48,12 @@ async function  setList(){
         <p class="tab-content text-center text-white">Start your next adventure here: plan your trip, book experiences, and share your journey with a community of travelers.</p>
 
         <div v-if="userStore.isLogin" class="input-group">
-          <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-          <button @click="store.listBySearch()" type="button" class="btn btn-primary">search</button>
+          <input v-model="store.boardStore.searchWord" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          <button @click="store.listBySearch('main')" type="button" class="btn btn-primary">search</button>
         </div>
 
         <div class="w-100" v-if="!userStore.isLogin">
-          <button class="btn btn-warning me-2">로그인</button>
+          <RouterLink to="/login"><button class="btn btn-warning me-2">로그인</button></RouterLink>
           <button class="btn btn-light">회원가입</button>
         </div>
       </div>
@@ -51,12 +62,12 @@ async function  setList(){
     <hr class="m-5" v-if="userStore.isLogin"/>
     <h3 class="ms-5 mb-3" v-if="userStore.isLogin">Latest Review</h3>
     <div class="d-flex justify-content-center justify-content-between flex-wrap w-100 px-lg-5" v-if="userStore.isLogin">
-      <MainCard v-for="(item, index) in store.latestBoard" :key="index" :board="item"/>
+      <MainCard v-for="(item, index) in store.latestBoard" :key="index" :board="item" @click="detailPage(item)"/>
     </div>
     <hr class="m-5" v-if="userStore.isLogin"/>
     <h3 class="ms-5 mb-3" v-if="userStore.isLogin">Best Review</h3>
     <div class="d-flex justify-content-center justify-content-between flex-wrap w-100 px-lg-5" v-if="userStore.isLogin">
-      <MainCard v-for="(item, index) in store.bestBoard" :key="index" :board="item"/>
+      <MainCard v-for="(item, index) in store.bestBoard" :key="index" :board="item" @click="detailPage(item)"/>
 
     </div>
     <hr class="m-5"/>

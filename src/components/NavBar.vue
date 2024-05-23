@@ -1,5 +1,7 @@
 <script setup>
 import { useUserStore } from '@/stores/user.js'
+import { useRouter } from 'vue-router'
+import { useBoardStore } from '@/stores/board.js'
 let userStore = useUserStore()
 
 console.log(userStore.isLogin);
@@ -8,12 +10,22 @@ const logout = () => {
   userStore.logout()
   location.reload()
 }
+const store=useBoardStore();
+async function  setList(){
+  await store.listBestBoard();
+  await store.listLatestBoard();
+  store.boardStore.limit=10
+}
+
+const homePage = () => {
+  setList()
+}
 </script>
 
 <template>
   <nav id="navbar" class="navbar border-bottom">
     <div class="container d-flex justify-content-start">
-      <RouterLink class="navbar-brand me-auto" to="/">
+      <RouterLink class="navbar-brand me-auto" to="/" @click="homePage">
         <img src="../assets/logo.png" id="logo">
         <span class="font-bold">TripPals</span>
       </RouterLink>
