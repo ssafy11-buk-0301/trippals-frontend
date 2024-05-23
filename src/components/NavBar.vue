@@ -3,7 +3,8 @@ import { useUserStore } from '@/stores/user.js'
 import { useEditorStore } from '@/stores/editor.js'
 import ScrollTop from 'primevue/scrolltop';
 import Dialog from 'primevue/dialog'
-import { onMounted, onUpdated, ref } from 'vue'
+import { onBeforeUnmount, onMounted, onUpdated, ref } from 'vue'
+import { useWebSocketStore } from '@/stores/websocket.js'
 
 let userStore = useUserStore()
 let editorStore = useEditorStore()
@@ -11,13 +12,18 @@ let editorStore = useEditorStore()
 console.log(userStore.isLogin);
 
 onUpdated(() => {
-  if (userStore.isLogin)
-    editorStore.findRequestList()
+  if (userStore.isLogin) {
+    editorStore.findRequestList();
+    useWebSocketStore().requestUpdate();
+  } else {
+    useWebSocketStore().requestDisconnect();
+  }
+
 });
 
-onMounted(() => {
+onBeforeUnmount(() => {
 
-})
+});
 
 const logout = () => {
   userStore.logout()

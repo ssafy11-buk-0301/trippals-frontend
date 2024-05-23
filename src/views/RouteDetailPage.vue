@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import AttractionListView from '@/components/route/AttractionListView.vue'
 import FestivalListView from '@/components/route/FestivalListView.vue'
 import AccommodationListView from '@/components/route/AccommodationListView.vue'
@@ -10,9 +10,18 @@ import ReviewListView from '@/components/route/ReviewListView.vue'
 import { useAttractionSearchStore } from '@/stores/attractionSearch.js'
 import MapView from '@/components/route/MapView.vue'
 import EditorManager from '@/components/editor/EditorManager.vue'
+import { useWebSocketStore } from '@/stores/websocket.js'
 
 let attractionStore = useAttractionStore();
 let attractionSearchStore = useAttractionSearchStore();
+
+onMounted(() => {
+  useWebSocketStore().routeConnect(attractionStore.routeSeq);
+});
+
+onBeforeUnmount(() => {
+  useWebSocketStore().routeDisconnect();
+});
 
 attractionStore.findAttraction();
 
