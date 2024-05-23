@@ -13,6 +13,8 @@ const insertBoardPage = () => {
   })
 }
 const bookmarkPage = () => {
+  setBoardMovePage(1)
+  boardStore.offset=0
   router.push({
     path: '/boards/bookmark'
   })
@@ -37,7 +39,7 @@ let board = {
   registerDate: new Date('2024-05-01'),
   writer: 'fosong'
 }
-let boardList = ref([board, board, board, board, board])
+// let boardList = ref([board, board, board, board, board])
 const movePage = (pageIndex) => {
   console.log('BoardMainVue : movePage : pageIndex : ' + pageIndex)
   setBoardMovePage(pageIndex)

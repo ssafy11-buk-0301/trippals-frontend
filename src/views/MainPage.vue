@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import {useBoardStore} from "@/stores/board.js";
 import MainCard from '@/components/MainCard.vue'
 import { useRouteStore } from '@/stores/route.js'
 import { useUserStore } from '@/stores/user.js'
@@ -17,9 +18,13 @@ let latestBoard = ref([
   {thumbnail: 'https://www.travelnbike.com/news/photo/201806/59638_91021_3124.jpg', title: '올해 여름휴가철 해외여행 키워드 동남아·휴양·가족·실속' },
   {thumbnail: 'https://statics.vinpearl.com/%EB%B2%A0%ED%8A%B8%EB%82%A8-%EC%97%AC%ED%96%89%EC%A7%80-2_1655286956.jpg', title: '베트남에서 꼭 가봐야 할 도시 & 여행지 BEST 10' },
 ]);
-
+const store=useBoardStore();
 let userStore = useUserStore()
-
+async function  setList(){
+  await store.listBestBoard();
+  await store.listLatestBoard();
+  store.boardStore.limit=10
+}
 </script>
 
 <template>
@@ -33,7 +38,7 @@ let userStore = useUserStore()
 
         <div v-if="userStore.isLogin" class="input-group">
           <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-          <button type="button" class="btn btn-primary">search</button>
+          <button @click="store.listBySearch()" type="button" class="btn btn-primary">search</button>
         </div>
 
         <div class="w-100" v-if="!userStore.isLogin">
@@ -46,12 +51,12 @@ let userStore = useUserStore()
     <hr class="m-5" v-if="userStore.isLogin"/>
     <h3 class="ms-5 mb-3" v-if="userStore.isLogin">Latest Review</h3>
     <div class="d-flex justify-content-center justify-content-between flex-wrap w-100 px-lg-5" v-if="userStore.isLogin">
-      <MainCard v-for="(item, index) in latestBoard" :key="index" :board="item"/>
+      <MainCard v-for="(item, index) in store.latestBoard" :key="index" :board="item"/>
     </div>
     <hr class="m-5" v-if="userStore.isLogin"/>
     <h3 class="ms-5 mb-3" v-if="userStore.isLogin">Best Review</h3>
     <div class="d-flex justify-content-center justify-content-between flex-wrap w-100 px-lg-5" v-if="userStore.isLogin">
-      <MainCard v-for="(item, index) in bestBoard" :key="index" :board="item"/>
+      <MainCard v-for="(item, index) in store.bestBoard" :key="index" :board="item"/>
 
     </div>
     <hr class="m-5"/>
